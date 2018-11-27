@@ -22,8 +22,14 @@ def menu():
     print ( "4- Haut")
     print ( "5- Bas")
     print ( "0- Sortir")
-    answer=int(input())
-    return answer
+    try :
+        answer=int(input())
+        return answer
+    except SyntaxError: # si l'utilisatuer appuie sur la touche entrée dans ajouter de valeur
+        pass
+    except NameError : # si l'utilisateur entre une str au lieu d'un int
+        pass
+
 
 def BuildCastle():
     """ Construction des éléments du chateau """
