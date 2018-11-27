@@ -1,6 +1,5 @@
 # -*-coding:utf-8 -*
 
-
 """ce programme est un jeu, où l'utilisateur déplace un fantôme appelé Gasper.
 Le but du jeu est de rejoindre le paradis en traversant le chateau tout en évitant
 les monstres. Gasper doit toujours avoir au moins une pinte dans son invnetaire,
@@ -10,7 +9,6 @@ si ce n'est pas la cas, c'est Game Over."""
 import sys
 import os
 import random
-
 
 #Fonctions liées à la construction du chateau
 
@@ -26,11 +24,10 @@ def menu(grille):
     try :
         answer=int(input())
         return answer
-    except SyntaxError: # si l'utilisatuer appuie sur la touche entrée dans ajouter de valeur
+    except SyntaxError: # si l'utilisatuer appuie sur la touche entrée sans ajouter de valeur
         pass
     except NameError : # si l'utilisateur entre une str au lieu d'un int
         pass
-
 
 def BuildCastle():
     """ Construction des éléments du chateau """
@@ -55,7 +52,7 @@ def Pop_pinte(dict_pinte):
     """Créer le nb de Pintes qui apparaissent dans le Château inférieur à 5 pintes dans tous le château """
     Pintet=0 #Nb total de pintes dans le chateau
     Nb=[] #Liste permettant de conserver les combinaisons possibles
-    while(Pintet<5):
+    while(Pintet<5): #Nous devons avoir que 5 pintes 
         if Pintet==1:
             x=random.randint(1,3)
             Pintet=Pintet+x
@@ -79,7 +76,6 @@ def Pop_pinte(dict_pinte):
     #Créer un dictionnaire correspondant aux salles avec des pintes et leur nombre, on peut avoir jusqu'à 5 salles
     for i in range(len(Nb)):
         dict_pinte[i]={"abs":None,"ord":None,"nb":Nb[i]}
-
 
 #Fonctions liées à la position de Gasper
 
@@ -115,115 +111,113 @@ def position(i,j,grille):
         grille[i][j]="&"
         return value
 
-def Limite(x,y,grille):
+def Limite(i,j,grille):
     """délimite l'espace du terrain de jeu"""
     size=len(grille)
     size1=len(grille[0])
-    if x>size-1 :
+    if i>size-1 :
         return True
-    elif y>size1-1:
+    elif j>size1-1:
         return True
-    elif x==-1:
+    elif i==-1:
         return True
-    elif y==-1:
+    elif j==-1:
         return True
-    elif grille[x][y]==" ":
+    elif grille[i][j]==" ":
         return True
 
-def droite(x,y,prev,grille):
+def droite(i,j,prev,grille):
     """ déplace Gasper d'une case vers la droite"""
-    grille[x][y]=prev
-    if Limite(x,y+1,grille)!=True:
-        value=position(x,y+1,grille)
-        mv=Trigger(x,y,prev,Gasper)
+    grille[i][j]=prev
+    if Limite(i,j+1,grille)!=True:
+        value=position(i,j+1,grille)
+        mv=Trigger(Gasper)
         if mv==1:
-            x1,y1,value1=Retour_recep(x,y,Gasper)
-            grille[x][y+1]=value
+            x1,y1,value1=Retour_recep(i,j,Gasper)
+            grille[i][j+1]=value
             return x1,y1,value1
         elif mv==0 :
-            x1,y1,value1=Fou_depl(x,y,Gasper,Index_room)
-            grille[x][y+1]=value
-            mv=Trigger(x,y,prev,Gasper)
+            x1,y1,value1=Fou_depl(i,j,Gasper,Index_room)
+            grille[i][j+1]=value
+            mv=Trigger(Gasper)
             return x1,y1,value1
         else :
-            return x,y+1,value
+            return i,j+1,value
     else :
-        value=position(x,y,grille)
+        value=position(i,j,grille)
         print("Mouvement impossible")
-        return x,y,value
+        return i,j,value
 
-def gauche(x,y,prev,grille):
+def gauche(i,j,prev,grille):
     """ déplace Gasper d'une case vers la gauche"""
-    grille[x][y]=prev
-    if Limite(x,y-1,grille)!=True:
-        value=position(x,y-1,grille)
-        mv=Trigger(x,y,prev,Gasper)
+    grille[i][j]=prev
+    if Limite(i,j-1,grille)!=True:
+        value=position(i,j-1,grille)
+        mv=Trigger(Gasper)
         if mv==1:
-            x1,y1,value1=Retour_recep(x,y,Gasper)
-            grille[x][y-1]=value
+            x1,y1,value1=Retour_recep(i,j,Gasper)
+            grille[i][j-1]=value
             return x1,y1,value1
         elif mv==0 :
-            x1,y1,value1=Fou_depl(x,y,Gasper,Index_room)
-            grille[x][y+1]=value
-            mv=Trigger(x,y,prev,Gasper)
+            x1,y1,value1=Fou_depl(i,j,Gasper,Index_room)
+            grille[i][j+1]=value
+            mv=Trigger(Gasper)
             return x1,y1,value1
         else :
-            return x,y-1,value
+            return i,j-1,value
     else :
-        value=position(x,y,grille)
+        value=position(i,j,grille)
         print ("Mouvement impossible")
-        return x,y,value
+        return i,j,value
 
-
-def haut(x,y,prev,grille):
+def haut(i,j,prev,grille):
     """ déplace Gasper d'une case vers le haut"""
-    grille[x][y]=prev
-    if Limite(x-1,y,grille)!=True:
-        value=position(x-1,y,grille)
-        mv=Trigger(x,y,prev,Gasper)
+    grille[i][j]=prev
+    if Limite(i-1,j,grille)!=True:
+        value=position(i-1,j,grille)
+        mv=Trigger(Gasper)
         if mv==1:
-            x1,y1,value1=Retour_recep(x,y,Gasper)
-            grille[x-1][y]=value
+            x1,y1,value1=Retour_recep(i,j,Gasper)
+            grille[i-1][j]=value
             return x1,y1,value1
         elif mv==0 :
-            x1,y1,value1=Fou_depl(x,y,Gasper,Index_room)
-            mv=Trigger(x,y,prev,Gasper)
-            grille[x-1][y]=value
+            x1,y1,value1=Fou_depl(i,j,Gasper,Index_room)
+            mv=Trigger(Gasper)
+            grille[i-1][j]=value
             return x1,y1,value1
         else :
-            return x-1,y,value
+            return i-1,j,value
     else :
-        value=position(x,y,grille)
+        value=position(i,j,grille)
         print ("Mouvement impossible")
-        return x,y,value
+        return i,j,value
 
-def bas(x,y,prev,grille):
+def bas(i,j,prev,grille):
     """ déplace Gasper d'une case vers le bas"""
-    grille[x][y]=prev
-    if Limite(x+1,y,grille)!=True:
-        value=position(x+1,y,grille)
-        mv=Trigger(x,y,prev,Gasper)
+    grille[i][j]=prev
+    if Limite(i+1,j,grille)!=True:
+        value=position(i+1,j,grille)
+        mv=Trigger(Gasper)
         if mv==1:
-            x1,y1,value1=Retour_recep(x,y,Gasper)
-            grille[x+1][y]=value
-
+            x1,y1,value1=Retour_recep(i,j,Gasper)
+            grille[i+1][j]=value
             return x1,y1,value1
         elif mv==0 :
-            x1,y1,value1=Fou_depl(x,y,Gasper,Index_room)
-            mv=Trigger(x,y,prev,Gasper)
-            grille[x+1][y]=value
+            x1,y1,value1=Fou_depl(i,j,Gasper,Index_room)
+            mv=Trigger(Gasper)
+            grille[i+1][j]=value
             return x1,y1,value1
         else :
-            return x+1,y,value
+            return i+1,j,value
     else :
-        value=position(x,y,grille)
+        value=position(i,j,grille)
         print ("Mouvement impossible")
-        return x,y,value
+        return i,j,value
 
 #Trigger à poser apres chaque deplacement:
-def Trigger(x,y,prev,Gasper):
+def Trigger(Gasper):
     for Monstre in Liste_monstre:
-        if (Monstre["abs"]==Gasper["abs"] and Monstre["ord"]==Gasper["ord"]):
+        if (Monstre["abs"]==Gasper["abs"] and Monstre["ord"]==Gasper["ord"]): #Si les positions sont identiques
             if Monstre == Master:
                 mv=1
                 return mv
@@ -234,7 +228,7 @@ def Trigger(x,y,prev,Gasper):
                 Trigger(Gasper)
             elif (Monstre == Bibbendum1 or Monstre == Bibbendum2 or Monstre == Bibbendum3):
                 Bib_take_pinte(Gasper)
-        elif Is_one_case_range(Monstre,Gasper) == True :
+        elif Is_one_case_range(Monstre,Gasper) == True : #Si la position de Gasper -1 de la position des monstres
             if Monstre == Master :
                 print("Gasper entend un bruit de clé")
             elif Monstre == Fou :
@@ -273,16 +267,16 @@ def Pop_monstre(D,Liste_monstre,Index_pop):
             x = random.randint(0,11)
         Index_pop.append(x) # note l'attribution d'indice dans Index_pop
         M["indice"] = x #permet de traquer l emplacement du monstre en cas de probleme avec Index_pop
-        M["abs"] = Index_room[x][0] # modifie l'abs du monstre grace a l Index_room
-        M["ord"] = Index_room[x][1] # modifie l ord du monstre grace a l Index_room
+        M["ord"] = Index_room[x][0] # modifie l'abs du monstre grace a l Index_room
+        M["abs"] = Index_room[x][1] # modifie l ord du monstre grace a l Index_room
     for k in D.keys(): #Attribution des valeurs de salle aux pintes
         x = random.randint(0,11)
         while Is_monstre(Index_pop,x) == True :
             x = random.randint(0,11)
         Index_pop.append(x)
         D[k]["indice"]=x
-        D[k]["abs"]=Index_room[x][0]
-        D[k]["ord"]=Index_room[x][1]
+        D[k]["ord"]=Index_room[x][0]
+        D[k]["abs"]=Index_room[x][1]
 
 def Is_one_case_range(Monstre,Gasper):
     """focntion qui verifie s'il y a un monstre à une case de Gasper"""
@@ -302,7 +296,6 @@ def Retour_recep (x,y,Gasper) :
     y=4
     return x,y,value
 
-
 #Savant fou :
 
 def Fou_take_pinte(Gasper):
@@ -313,13 +306,12 @@ def Fou_take_pinte(Gasper):
 def Fou_depl(x,y,Gasper,Index_room):
     """pouvoir du Fou qui modifie de manière aléatoire la position de Gasper"""
     i = random.randint(0,11)
-    y = Index_room[i][0]
-    x = Index_room[i][1]
+    x = Index_room[i][0]
+    y = Index_room[i][1]
     value=position(x,y,Plateau)
     return x,y,value
 
 #Chamallow bibbendum:
-
 
 def Bib_take_pinte(Gasper):
     """Le Bibbendum vole 2 pintes à Gasper, modifie la nombre de pinte que possède Gasper"""
@@ -330,7 +322,7 @@ def Bib_take_pinte(Gasper):
 
 #Plateau de jeu
 Index_pop = [] # contient des indices x générés alétoirement => Index_room[x] = coordonnees de la salle dans lequelle il y a le monstre qui a obtenue l'indice X
-Index_room = [[0,2],[0,4],[0,6],[4,2],[4,4],[4,6],[8,2],[8,4],[8,6],[12,2],[12,4],[12,6],[4,0],[10,8]] #liste des salle du chateau Index_room[4,0] = reception , Index_room[10,8]=paradis
+Index_room = [[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]] #liste des salle du chateau Index_room[4,0] = reception , Index_room[10,8]=paradis
 Gasper = {"abs" : 0, "ord" : 0, "pinte" : 3}
 Master = {"abs" : None, "ord" : None, "indice": None}
 Fou = {"abs": None, "ord": None, "indice": None}
@@ -341,11 +333,9 @@ Pintes={}
 Liste_monstre = [Master,Fou,Bibbendum1,Bibbendum2,Bibbendum3]
 Plateau=[]
 
-
 #Main
 
 if __name__ == '__main__':
-
 
     Plateau=BuildCastle()
     print(Plateau[0][2])
