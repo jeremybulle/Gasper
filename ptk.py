@@ -5,6 +5,13 @@
 from Tkinter import *
 from tkMessageBox import *
 import random
+import os
+def restart_program():
+    """Restarts the current program.
+    Note: this function does not return. Any cleanup action (like
+    saving data) must be done before calling this function."""
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
 
 def position(i,j,grille):
     """ Position de Gasper """ 
@@ -12,9 +19,6 @@ def position(i,j,grille):
     value=grille[i][j]
     Gasper["abs"]=j
     Gasper["ord"]=i
-    # Sinon Gasper peut continuer son chemin
-    grille[i][j]="&"
-    Chateautk(frame,grille)
     # Si la valeur temporaire correpond à la valeur du Paradis le fantôme gagne
     if value==2:
         showinfo("GG !!","You win")
@@ -23,6 +27,11 @@ def position(i,j,grille):
         result=askquestion("RIP", "Game Over")
         if result=="no":
             f.quit()
+        elif result=="yes":
+            restart_program()
+    else :
+        grille[i][j]="&"
+        Chateautk(frame,grille)
 
 def BuildCastle():
     """ Construction du chateau """
@@ -206,8 +215,8 @@ def droite(i,j,prev,grille):
             grille[i][j+1]=value
         elif mv==0 :
             Fou_depl(i,j,Gasper,Index_room)
-            grille[i][j+1]=value
             Trigger(i,j,prev,Gasper)
+            grille[i][j+1]=value
         else :
             x=i
             y=j+1
@@ -231,8 +240,8 @@ def gauche(i,j,prev,grille):
             grille[i][j-1]=value
         elif mv==0 :
             Fou_depl(i,j,Gasper,Index_room)
-            grille[i][j+1]=value
             Trigger(i,j,prev,Gasper)
+            grille[i][j+1]=value
         else :
             x=i
             y=j-1
