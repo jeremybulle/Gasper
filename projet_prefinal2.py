@@ -18,7 +18,6 @@ def menu(grille):
     """affichage de l'interface avec l'utilisateur"""
     afficher(grille)
     print ("Gasper possède {0} pinte(s)".format(Gasper["pinte"]))
-    print ( "7- Gasper entre dans le chateau")
     print ( "6- Droite")
     print ( "4- Gauche")
     print ( "8- Haut")
@@ -269,17 +268,17 @@ def Pop_monstre(D,Liste_monstre,Index_pop):
     """fonction qui attribue les coordonnées à tous les monstres"""
     Index_pop = [] #reset l indice de pop si on veut faire repop les monstres de maniere aleatoire(sans que l ancien pop influe)
     for M in Liste_monstre:
-        x = random.randint(0,12) # génère un indice aléatoire
+        x = random.randint(0,11) # génère un indice aléatoire
         while Is_monstre(Index_pop,x) == True : #vérifie si l'indice est attribué à un autre monstre , si c est le cas relance random.randit
-            x = random.randint(0,12)
+            x = random.randint(0,11)
         Index_pop.append(x) # note l'attribution d'indice dans Index_pop
         M["indice"] = x #permet de traquer l emplacement du monstre en cas de probleme avec Index_pop
         M["abs"] = Index_room[x][0] # modifie l'abs du monstre grace a l Index_room
         M["ord"] = Index_room[x][1] # modifie l ord du monstre grace a l Index_room
     for k in D.keys(): #Attribution des valeurs de salle aux pintes
-        x = random.randint(0,12)
+        x = random.randint(0,11)
         while Is_monstre(Index_pop,x) == True :
-            x = random.randint(0,12)
+            x = random.randint(0,11)
         Index_pop.append(x)
         D[k]["indice"]=x
         D[k]["abs"]=Index_room[x][0]
@@ -313,7 +312,7 @@ def Fou_take_pinte(Gasper):
 
 def Fou_depl(x,y,Gasper,Index_room):
     """pouvoir du Fou qui modifie de manière aléatoire la position de Gasper"""
-    i = random.randint(0,12)
+    i = random.randint(0,11)
     y = Index_room[i][0]
     x = Index_room[i][1]
     value=position(x,y,Plateau)
@@ -347,19 +346,18 @@ Plateau=[]
 
 if __name__ == '__main__':
 
-    Plateau=BuildCastle()
 
+    Plateau=BuildCastle()
+    print(Plateau[0][2])
+    x=8
+    y=4
+    value=position(x,y,Plateau)
+    Pop_pinte(Pintes)
+    Pop_monstre(Pintes,Liste_monstre,Index_pop)
     while True :
         answer=menu(Plateau)
         os.system("clear")
-        if answer==7:
-            os.system("clear")
-            x=8
-            y=4
-            value=position(x,y,Plateau)
-            Pop_pinte(Pintes)
-            Pop_monstre(Pintes,Liste_monstre,Index_pop)
-        elif answer==6:
+        if answer==6:
             os.system("clear")
             x,y,value=droite(x,y,value,Plateau)
         elif answer==4:
