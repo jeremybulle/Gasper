@@ -1,5 +1,11 @@
 # -*-coding:utf-8 -*
 
+
+"""ce programme est un jeu, où l'utilisateur déplace un fantôme appelé Gasper.
+Le but du jeu est de rejoindre le paradis en traversant le chateau tout en évitant
+les monstres. Gasper doit toujours avoir au moins une pinte dans son invnetaire,
+si ce n'est pas la cas, c'est Game Over."""
+
 #importation des modules
 import sys
 import os
@@ -317,7 +323,7 @@ def Bib_take_pinte(Gasper):
 
 #Plateau de jeu
 Index_pop = [] # contient des indices x générés alétoirement => Index_room[x] = coordonnees de la salle dans lequelle il y a le monstre qui a obtenue l'indice X
-Index_room = [[0,2],[0,4],[0,6],[4,2],[4,4],[4,6],[8,2],[8,4],[8,6],[12,2],[12,4],[12,6],[4,0],[10,8]] #liste des salle du chateau Index_room[5,1] = reception , Index_room[13]=paradis
+Index_room = [[0,2],[0,4],[0,6],[4,2],[4,4],[4,6],[8,2],[8,4],[8,6],[12,2],[12,4],[12,6],[4,0],[10,8]] #liste des salle du chateau Index_room[4,0] = reception , Index_room[10,8]=paradis
 Gasper = {"abs" : 0, "ord" : 0, "pinte" : 3}
 Master = {"abs" : None, "ord" : None, "indice": None}
 Fou = {"abs": None, "ord": None, "indice": None}
