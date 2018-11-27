@@ -34,11 +34,11 @@ def menu(grille):
 
 def BuildCastle():
     """ Construction des éléments du chateau """
-    grille=[[" "," ","*","*","*","*","*"," "," "," ",2," "," "],[" "," ","*"," "," "," ","*"," "," "," ","*"," "," "],
+    grille=[[" "," ","*","*","*","*","*"," "," "," ","P"," "," "],[" "," ","*"," "," "," ","*"," "," "," ","*"," "," "],
     [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],["*"," ","*"," "," "," ","*"," "," "," ","*"," ","*"],
     [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],["*"," ","*"," "," "," ","*"," "," "," ","*"," ","*"],
     [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],[" "," ","*"," "," "," ","*"," "," "," "," "," "," "],
-    [" "," ","*","*",1,"*","*"," "," "," "," "," "," "]]
+    [" "," ","*","*","R","*","*"," "," "," "," "," "," "]]
     return grille
 
 def afficher(grille):
@@ -51,13 +51,13 @@ def afficher(grille):
 
 # Pop pinte :
 
-def Pop_pinte(D):
+def Pop_pinte(dict_pinte):
     """Créer le nb de Pintes qui apparaissent dans le Château inférieur à 5 pintes dans tous le château """
     Pintet=0 #Nb total de pintes dans le chateau
     Nb=[] #Liste permettant de conserver les combinaisons possibles
     while(Pintet<5):
         if Pintet==1:
-            x=random.randint(1,4)
+            x=random.randint(1,3)
             Pintet=Pintet+x
             Nb.append(x)
         elif Pintet==2:
@@ -73,12 +73,12 @@ def Pop_pinte(D):
             Pintet=Pintet+x
             Nb.append(x)
         else :
-            x=random.randint(1,5)
+            x=random.randint(1,3)
             Pintet=Pintet+x
             Nb.append(x)
     #Créer un dictionnaire correspondant aux salles avec des pintes et leur nombre, on peut avoir jusqu'à 5 salles
     for i in range(len(Nb)):
-        Pintes[i]={"abs":None,"ord":None,"nb":Nb[i]}
+        dict_pinte[i]={"abs":None,"ord":None,"nb":Nb[i]}
 
 
 #Fonctions liées à la position de Gasper
@@ -89,7 +89,7 @@ def position(i,j,grille):
     Gasper["abs"]=j
     Gasper["ord"]=i
     # Si la valeur temporaire correpond à la valeur du Paradis le fantôme gagne
-    if value==2:
+    if value=="P":
         print "You win !!"
         print "Appuyez une touche pour fermer le programme"
         print "1. fermer le programme"
