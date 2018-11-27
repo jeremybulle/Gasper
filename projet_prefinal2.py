@@ -10,6 +10,13 @@ import sys
 import os
 import random
 
+def restart_program():
+    """Restarts the current program.
+    Note: this function does not return. Any cleanup action (like
+    saving data) must be done before calling this function."""
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+
 #Fonctions liées à la construction du chateau
 
 def menu(grille):
@@ -94,7 +101,7 @@ def position(i,j,grille):
         if flag == 1 :
             sys.exit()
         if flag == 2 :
-            None
+            restart_program()
     # Si Gasper n'a plus de pintes, il perd"
     elif Gasper["pinte"]<0 or Gasper["pinte"]==0:
         print "Gasper ne peut plus se déplacer sans énergie..."
@@ -105,7 +112,7 @@ def position(i,j,grille):
         if flag == 1 :
             sys.exit()
         if flag == 2 :
-            None
+            restart_program()
     # Sinon Gasper peut continuer son chemin
     else :
         grille[i][j]="&"
@@ -242,7 +249,7 @@ def Trigger(Gasper):
             if Pintes[k]["nb"]==0:
                 print "Tu as assez bu pochtron !!"
             else :
-                print "Oh de la biere !! Gasper gagne %d pintes"%(Pintes[k]["nb"])
+                print "Oh de l'ectoplasme vert !! Gasper gagne %d pintes"%(Pintes[k]["nb"])
                 Gasper["pinte"]=Gasper["pinte"]+Pintes[k]["nb"]
                 Pintes[k]["nb"]=0
 
@@ -301,7 +308,7 @@ def Retour_recep (x,y,Gasper) :
 def Fou_take_pinte(Gasper):
     """Le Fou vole 1 pinte à Gasper, modifie la nombre de pinte que possède Gasper"""
     Gasper["pinte"] = Gasper["pinte"] - 1 #modifie la valeur dans le dict Gasper
-    print("Gasper perd une pinte d'energie, il lui reste", Gasper["pinte"],"pinte(s) d'energie")
+    print "Gasper perd une pinte d'ectoplasme, il lui reste %d pinte(s) d'energie"%(Gasper["pinte"])
 
 def Fou_depl(x,y,Gasper,Index_room):
     """pouvoir du Fou qui modifie de manière aléatoire la position de Gasper"""
@@ -316,7 +323,7 @@ def Fou_depl(x,y,Gasper,Index_room):
 def Bib_take_pinte(Gasper):
     """Le Bibbendum vole 2 pintes à Gasper, modifie la nombre de pinte que possède Gasper"""
     Gasper["pinte"] = Gasper["pinte"] - 2
-    print("Gasper une pinte d'energie, il lui reste", Gasper["pinte"],"pinte(s) d'energie")
+    print "Gasper paralysé perd deux pintes d'ectoplasme, il lui reste %d pinte(s) d'ectoplasme"%(Gasper["pinte"])
 
 #Intitialisation:
 
@@ -338,7 +345,6 @@ Plateau=[]
 if __name__ == '__main__':
 
     Plateau=BuildCastle()
-    print(Plateau[0][2])
     x=8
     y=4
     value=position(x,y,Plateau)
