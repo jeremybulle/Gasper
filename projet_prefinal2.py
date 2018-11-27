@@ -14,8 +14,9 @@ import random
 
 #Fonctions liées à la construction du chateau
 
-def menu():
+def menu(grille):
     """affichage de l'interface avec l'utilisateur"""
+    afficher(grille)
     print ( "1- Gasper entre dans le chateau")
     print ( "2- Droite")
     print ( "3- Gauche")
@@ -111,7 +112,6 @@ def position(i,j,grille):
     # Sinon Gasper peut continuer son chemin
     else :
         grille[i][j]="&"
-        afficher(grille)
         return value
 
 def Limite(x,y,grille):
@@ -346,11 +346,9 @@ Plateau=[]
 if __name__ == '__main__':
 
     Plateau=BuildCastle()
-    afficher(Plateau)
-
 
     while True :
-        answer=menu()
+        answer=menu(Plateau)
         os.system("clear")
         if answer==1:
             os.system("clear")
