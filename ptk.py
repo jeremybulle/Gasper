@@ -1,7 +1,6 @@
 # -*-coding:utf-8 -*
 
 #Importation des modules
-
 from Tkinter import *
 from tkMessageBox import *
 import random
@@ -316,8 +315,7 @@ def Chateautk(w,grille):
             elif grille[i][j]==" ":
                 Canvas(w,width=50,height=50,bg="black").grid(row=i,column=j)
             elif grille[i][j]=="&":
-                Canvas(w,width=50,height=50,bg="white").grid(row=i,column=j)
-
+                Canvas(w,width=50,height=50,bg="purple").grid(row=i,column=j)
 
 Plateau=BuildCastle()
 
@@ -334,9 +332,6 @@ Bibbendum2 = {"abs": None, "ord": None, "indice": None}
 Bibbendum3 = {"abs": None, "ord": None, "indice": None}
 Pintes={}
 Liste_monstre = [Master,Fou,Bibbendum1,Bibbendum2,Bibbendum3]
-
-               
-
 
 #Creation de la fenetre
 f=Tk()
@@ -355,7 +350,6 @@ position(x,y,Plateau)
 Pop_pinte(Pintes)
 Pop_monstre(Pintes,Liste_monstre,Index_pop)
 
-
 #Bouton deplacement
 
 boutonl=Button(cadre,text="Left",command=lambda: gauche(x,y,value,Plateau))
@@ -371,6 +365,4 @@ boutonq=Button(cadre,text="Quit",command=f.quit)
 boutonq.grid(row=10,column=5)
 
 #Main
-
-
 f.mainloop()
