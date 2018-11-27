@@ -17,6 +17,7 @@ import random
 def menu(grille):
     """affichage de l'interface avec l'utilisateur"""
     afficher(grille)
+    print ("Gasper possède {0} pinte(s)".format(Gasper["pinte"]))
     print ( "7- Gasper entre dans le chateau")
     print ( "6- Droite")
     print ( "4- Gauche")
