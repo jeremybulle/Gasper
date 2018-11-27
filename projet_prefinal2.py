@@ -17,11 +17,11 @@ import random
 def menu(grille):
     """affichage de l'interface avec l'utilisateur"""
     afficher(grille)
-    print ( "1- Gasper entre dans le chateau")
-    print ( "2- Droite")
-    print ( "3- Gauche")
-    print ( "4- Haut")
-    print ( "5- Bas")
+    print ( "7- Gasper entre dans le chateau")
+    print ( "6- Droite")
+    print ( "4- Gauche")
+    print ( "8- Haut")
+    print ( "2- Bas")
     print ( "0- Sortir")
     try :
         answer=int(input())
@@ -96,17 +96,18 @@ def position(i,j,grille):
         print "2. relancer une partie"
         flag = input()
         if flag == 1 :
-            exit()
+            sys.exit()
         if flag == 2 :
             None
     # Si Gasper n'a plus de pintes, il perd"
     elif Gasper["pinte"]<0 or Gasper["pinte"]==0:
+        print "Gasper ne peut plus se déplacer sans énergie..."
         print "Game Over"
         print "1. fermer le programme"
         print "2. relancer une partie"
         flag = input()
         if flag == 1 :
-            exit()
+            sys.exit()
         if flag == 2 :
             None
     # Sinon Gasper peut continuer son chemin
@@ -350,24 +351,24 @@ if __name__ == '__main__':
     while True :
         answer=menu(Plateau)
         os.system("clear")
-        if answer==1:
+        if answer==7:
             os.system("clear")
             x=8
             y=4
             value=position(x,y,Plateau)
             Pop_pinte(Pintes)
             Pop_monstre(Pintes,Liste_monstre,Index_pop)
-        elif answer==2:
+        elif answer==6:
             os.system("clear")
             x,y,value=droite(x,y,value,Plateau)
-        elif answer==3:
-            os.system("clear")
-            x,y,value=gauche(x,y,value,Plateau)
         elif answer==4:
             os.system("clear")
+            x,y,value=gauche(x,y,value,Plateau)
+        elif answer==8:
+            os.system("clear")
             x,y,value=haut(x,y,value,Plateau)
-        elif answer==5:
+        elif answer==2:
             os.system("clear")
             x,y,value=bas(x,y,value,Plateau)
         elif answer==0:
-            break
+            sys.exit()
