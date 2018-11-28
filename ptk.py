@@ -20,6 +20,8 @@ def position(i,j,grille):
     Gasper["ord"]=i
     # Si la valeur temporaire correpond à la valeur du Paradis le fantôme gagne
     if value==2:
+        grille[i][j]="&"
+        Chateautk(frame,grille)
         showinfo("GG !!","You win")
         f.quit()
     elif Gasper["pinte"]<0 or Gasper["pinte"]==0:
@@ -47,7 +49,7 @@ def Pop_pinte(D):
     Nb=[] #Liste permettant de conserver les combinaisons possibles 
     while(Pintet<5):
         if Pintet==1:
-            x=random.randint(1,4)
+            x=random.randint(1,3)
             Pintet=Pintet+x
             Nb.append(x)
         elif Pintet==2:
@@ -63,7 +65,7 @@ def Pop_pinte(D):
             Pintet=Pintet+x
             Nb.append(x)
         else :
-            x=random.randint(1,5)
+            x=random.randint(1,3)
             Pintet=Pintet+x
             Nb.append(x)
     #Créer un dictionnaire correspondant aux salles avec des pintes et leur nombre, on peut avoir jusqu'à 5 salles 
@@ -94,16 +96,16 @@ def Pop_monstre(D,Liste_monstre,Index_pop):
             x = random.randint(0,11)
         Index_pop.append(x) # note l'attribution d'indice dans Index_pop
         M["indice"] = x #permet de traquer l emplacement du monstre en cas de probleme avec Index_pop
-        M["abs"] = Index_room[x][0] # modifie l'abs du monstre grace a l Index_room
-        M["ord"] = Index_room[x][1] # modifie l ord du monstre grace a l Index_room
+        M["ord"] = Index_room[x][0] # modifie l'abs du monstre grace a l Index_room
+        M["abs"] = Index_room[x][1] # modifie l ord du monstre grace a l Index_room
     for k in D.keys(): #Attribution des valeurs de salle aux pintes 
-        x = random.randint(0,12) 
+        x = random.randint(0,11) 
         while Is_monstre(Index_pop,x) == True : 
             x = random.randint(0,11)
         Index_pop.append(x)
         D[k]["indice"]=x
-        D[k]["abs"]=Index_room[x][0] 
-        D[k]["ord"]=Index_room[x][1]
+        D[k]["ord"]=Index_room[x][0] 
+        D[k]["abs"]=Index_room[x][1]
         
 def Is_one_case_range(Monstre,Gasper):
     """focntion qui verifie s'il y a un monstre à une case de Gasper"""
@@ -138,9 +140,9 @@ def Fou_depl(i,j,Gasper,Index_room):
     global x
     global y
     global value
-    r = random.randint(0,12)
-    y = Index_room[r][0]
-    x = Index_room[r][1]
+    r = random.randint(0,11)
+    x = Index_room[r][0]
+    y = Index_room[r][1]
     position(x,y,Plateau)
 
 #Chamallow bibbendum:
@@ -181,7 +183,7 @@ def Trigger(x,y,prev,Gasper):
             if Pintes[k]["nb"]==0:
                 showinfo("Bar","Tu as assez bu pochtron !!")
             else : 
-                showinfo("Bar","Oh de la biere !! Gasper gagne %d pintes"%(Pintes[k]["nb"]))
+                showinfo("Bar","Oh de l'ectoplasme !! Gasper gagne %d pintes"%(Pintes[k]["nb"]))
                 Gasper["pinte"]=Gasper["pinte"]+Pintes[k]["nb"]
                 Pintes[k]["nb"]=0
 
@@ -289,9 +291,9 @@ def bas(i,j,prev,grille):
             Retour_recep(i,j,Gasper)
             grille[i+1][j]=value
         elif mv==0 :
-            Fou_depl(x,y,Gasper,Index_room)
-            Trigger(x,y,prev,Gasper)
-            grille[x+1][y]=value
+            Fou_depl(i,j,Gasper,Index_room)
+            Trigger(i,j,prev,Gasper)
+            grille[i+1][j]=value
         else :
             x=i+1
             y=j
@@ -309,13 +311,18 @@ def Chateautk(w,grille):
         for j in range(size2):
             n=n+1
             if grille[i][j]==1 or grille[i][j]==0 or grille[i][j]==2 :
-                Canvas(w,width=50,height=50,bg="red").grid(row=i,column=j)
+                Canvas(w,width=50,height=50,bg="Lightsteelblue3").grid(row=i,column=j)
             elif grille[i][j]=="*":
-                Canvas(w,width=50,height=50,bg="blue").grid(row=i,column=j)
+                Canvas(w,width=50,height=50,bg="dark slate grey").grid(row=i,column=j)
             elif grille[i][j]==" ":
-                Canvas(w,width=50,height=50,bg="black").grid(row=i,column=j)
+                Canvas(w,width=50,height=50,bg="gray6").grid(row=i,column=j)
             elif grille[i][j]=="&":
-                Canvas(w,width=50,height=50,bg="purple").grid(row=i,column=j)
+                can=Canvas(w,width=50,height=50)
+                can.grid(row=i,column=j)
+                img=PhotoImage(file="cat-ghost-pattern.gif",master=can)
+                can.create_image(50/2,50/2,image=img)
+                label=Label(image=img)
+                label.image=img
 
 Plateau=BuildCastle()
 
@@ -323,7 +330,7 @@ Plateau=BuildCastle()
 
 #Plateau de jeu
 Index_pop = [] # contient des indices x générés alétoirement => Index_room[x] = coordonnees de la salle dans lequelle il y a le monstre qui a obtenue l'indice X
-Index_room = [[0,2],[0,4],[0,6],[4,2],[4,4],[4,6],[8,2],[8,4],[8,6],[12,2],[12,4],[12,6],[4,8],[10,8]] #liste des salle du chateau Index_room[5,1] = reception , Index_room[13]=paradis
+Index_room = [[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]] #liste des salle du chateau Index_room[5,1] = reception , Index_room[13]=paradis
 Gasper = {"abs" : 0, "ord" : 0, "pinte" : 3}
 Master = {"abs" : None, "ord" : None, "indice": None}
 Fou = {"abs": None, "ord": None, "indice": None}
