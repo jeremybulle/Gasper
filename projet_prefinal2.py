@@ -2,7 +2,7 @@
 
 """ce programme est un jeu, où l'utilisateur déplace un fantôme appelé Gasper.
 Le but du jeu est de rejoindre le paradis en traversant le chateau tout en évitant
-les monstres. Gasper doit toujours avoir au moins une pinte dans son invnetaire,
+les monstres. Gasper doit toujours avoir au moins une pinte dans son inventaire,
 si ce n'est pas la cas, c'est Game Over."""
 
 #importation des modules
@@ -11,9 +11,7 @@ import os
 import random
 
 def restart_program():
-    """Restarts the current program.
-    Note: this function does not return. Any cleanup action (like
-    saving data) must be done before calling this function."""
+    """Relance le programme en cours"""
     python = sys.executable
     os.execl(python, python, * sys.argv)
 
@@ -53,37 +51,6 @@ def afficher(grille):
             print j,
         print " "
 
-# Pop pinte :
-
-def Pop_pinte(dict_pinte):
-    """Créer le nb de Pintes qui apparaissent dans le Château inférieur à 5 pintes dans tous le château """
-    Pintet=0 #Nb total de pintes dans le chateau
-    Nb=[] #Liste permettant de conserver les combinaisons possibles
-    while(Pintet<5): #Nous devons avoir que 5 pintes 
-        if Pintet==1:
-            x=random.randint(1,3)
-            Pintet=Pintet+x
-            Nb.append(x)
-        elif Pintet==2:
-            x=random.randint(1,3)
-            Pintet=Pintet+x
-            Nb.append(x)
-        if Pintet==3:
-            x=random.randint(1,2)
-            Pintet=Pintet+x
-            Nb.append(x)
-        elif Pintet==4:
-            x=1
-            Pintet=Pintet+x
-            Nb.append(x)
-        else :
-            x=random.randint(1,3)
-            Pintet=Pintet+x
-            Nb.append(x)
-    #Créer un dictionnaire correspondant aux salles avec des pintes et leur nombre, on peut avoir jusqu'à 5 salles
-    for i in range(len(Nb)):
-        dict_pinte[i]={"abs":None,"ord":None,"nb":Nb[i]}
-
 #Fonctions liées à la position de Gasper
 
 def position(i,j,grille):
@@ -101,6 +68,7 @@ def position(i,j,grille):
         if flag == 1 :
             sys.exit()
         if flag == 2 :
+            os.system("clear")
             restart_program()
     # Si Gasper n'a plus de pintes, il perd"
     elif Gasper["pinte"]<0 or Gasper["pinte"]==0:
@@ -112,6 +80,7 @@ def position(i,j,grille):
         if flag == 1 :
             sys.exit()
         if flag == 2 :
+            os.system("clear")
             restart_program()
     # Sinon Gasper peut continuer son chemin
     else :
@@ -221,38 +190,6 @@ def bas(i,j,prev,grille):
         print ("Mouvement impossible")
         return i,j,value
 
-#Trigger à poser apres chaque deplacement:
-def Trigger(Gasper):
-    for Monstre in Liste_monstre:
-        if (Monstre["abs"]==Gasper["abs"] and Monstre["ord"]==Gasper["ord"]): #Si les positions sont identiques
-            if Monstre == Master:
-                mv=1
-                return mv
-            elif Monstre == Fou :
-                mv=0
-                Fou_take_pinte(Gasper)
-                return mv
-                Trigger(Gasper)
-            elif (Monstre == Bibbendum1 or Monstre == Bibbendum2 or Monstre == Bibbendum3):
-                Bib_take_pinte(Gasper)
-        elif Is_one_case_range(Monstre,Gasper) == True : #Si la position de Gasper -1 de la position des monstres
-            if Monstre == Master :
-                print("Gasper entend un bruit de clé")
-            elif Monstre == Fou :
-                print("Gasper entend un rire sardonique")
-            elif (Monstre == Bibbendum1 or Monstre == Bibbendum2 or Monstre == Bibbendum3):
-                print("Gasper sent une odeur alléchante de chamallow à la fraise")
-        else :
-            mv=2
-    for k in Pintes.keys():
-        if (Pintes[k]["abs"]==Gasper["abs"] and Pintes[k]["ord"]==Gasper["ord"]):
-            if Pintes[k]["nb"]==0:
-                print "Tu as assez bu pochtron !!"
-            else :
-                print "Oh de l'ectoplasme vert !! Gasper gagne %d pintes"%(Pintes[k]["nb"])
-                Gasper["pinte"]=Gasper["pinte"]+Pintes[k]["nb"]
-                Pintes[k]["nb"]=0
-
 # Fonctions relatives à la positions des ennemis:
 def Is_monstre(Index_pop,x):
     """vérifie s il y a déjà un monstre dans la piece, x étant la valeur envoyée par la fonction random"""
@@ -264,6 +201,27 @@ def Is_monstre(Index_pop,x):
         return True #indice déjà attribué à un monstre
     else :
         return False #indice pas utilisé pour un autre monstre, il est utilisable pour un nouveau monstre
+    
+def Pop_pinte(dict_pinte):
+    """Créer le nb de Pintes qui apparaissent dans le Château inférieur à 5 pintes dans tous le château """
+    Pintet=0 #Nb total de pintes dans le chateau
+    Nb=[] #Liste permettant de conserver les combinaisons possibles
+    while(Pintet<5): #Nous devons avoir que 5 pintes 
+        if Pintet==3:
+            x=random.randint(1,2)
+            Pintet=Pintet+x
+            Nb.append(x)
+        elif Pintet==4:
+            x=1
+            Pintet=Pintet+x
+            Nb.append(x)
+        else :
+            x=random.randint(1,3)
+            Pintet=Pintet+x
+            Nb.append(x)
+    #Créer un dictionnaire correspondant aux salles avec des pintes et leur nombre, on peut avoir jusqu'à 5 salles
+    for i in range(len(Nb)):
+        dict_pinte[i]={"abs":None,"ord":None,"nb":Nb[i]}
 
 def Pop_monstre(D,Liste_monstre,Index_pop):
     """fonction qui attribue les coordonnées à tous les monstres"""
@@ -273,7 +231,6 @@ def Pop_monstre(D,Liste_monstre,Index_pop):
         while Is_monstre(Index_pop,x) == True : #vérifie si l'indice est attribué à un autre monstre , si c est le cas relance random.randit
             x = random.randint(0,11)
         Index_pop.append(x) # note l'attribution d'indice dans Index_pop
-        M["indice"] = x #permet de traquer l emplacement du monstre en cas de probleme avec Index_pop
         M["ord"] = Index_room[x][0] # modifie l'abs du monstre grace a l Index_room
         M["abs"] = Index_room[x][1] # modifie l ord du monstre grace a l Index_room
     for k in D.keys(): #Attribution des valeurs de salle aux pintes
@@ -281,7 +238,6 @@ def Pop_monstre(D,Liste_monstre,Index_pop):
         while Is_monstre(Index_pop,x) == True :
             x = random.randint(0,11)
         Index_pop.append(x)
-        D[k]["indice"]=x
         D[k]["ord"]=Index_room[x][0]
         D[k]["abs"]=Index_room[x][1]
 
@@ -325,17 +281,50 @@ def Bib_take_pinte(Gasper):
     Gasper["pinte"] = Gasper["pinte"] - 2
     print "Gasper paralysé perd deux pintes d'ectoplasme, il lui reste %d pinte(s) d'ectoplasme"%(Gasper["pinte"])
 
+#Trigger à poser apres chaque deplacement:
+def Trigger(Gasper):
+    for Monstre in Liste_monstre:
+        if (Monstre["abs"]==Gasper["abs"] and Monstre["ord"]==Gasper["ord"]): #Si les positions sont identiques
+            if Monstre == Master:
+                mv=1
+                return mv
+            elif Monstre == Fou :
+                mv=0
+                Fou_take_pinte(Gasper)
+                return mv
+                Trigger(Gasper)
+            elif (Monstre == Bibbendum1 or Monstre == Bibbendum2 or Monstre == Bibbendum3):
+                Bib_take_pinte(Gasper)
+        elif Is_one_case_range(Monstre,Gasper) == True : #Si la position de Gasper -1 de la position des monstres
+            if Monstre == Master :
+                print("Gasper entend un bruit de clé")
+            elif Monstre == Fou :
+                print("Gasper entend un rire sardonique")
+            elif (Monstre == Bibbendum1 or Monstre == Bibbendum2 or Monstre == Bibbendum3):
+                print("Gasper sent une odeur alléchante de chamallow à la fraise")
+        else :
+            mv=2
+    for k in Pintes.keys():
+        if (Pintes[k]["abs"]==Gasper["abs"] and Pintes[k]["ord"]==Gasper["ord"]):
+            if Pintes[k]["nb"]==0:
+                print "Tu as assez bu pochtron !!"
+            else :
+                print "Oh de l'ectoplasme vert !! Gasper gagne %d pintes"%(Pintes[k]["nb"])
+                Gasper["pinte"]=Gasper["pinte"]+Pintes[k]["nb"]
+                Pintes[k]["nb"]=0
+
+
 #Intitialisation:
 
 #Plateau de jeu
 Index_pop = [] # contient des indices x générés alétoirement => Index_room[x] = coordonnees de la salle dans lequelle il y a le monstre qui a obtenue l'indice X
 Index_room = [[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]] #liste des salle du chateau Index_room[4,0] = reception , Index_room[10,8]=paradis
 Gasper = {"abs" : 0, "ord" : 0, "pinte" : 3}
-Master = {"abs" : None, "ord" : None, "indice": None}
-Fou = {"abs": None, "ord": None, "indice": None}
-Bibbendum1 = {"abs": None, "ord": None,"indice": None}
-Bibbendum2 = {"abs": None, "ord": None, "indice": None}
-Bibbendum3 = {"abs": None, "ord": None, "indice": None}
+Master = {"abs" : None, "ord" : None}
+Fou = {"abs": None, "ord": None}
+Bibbendum1 = {"abs": None, "ord": None}
+Bibbendum2 = {"abs": None, "ord": None}
+Bibbendum3 = {"abs": None, "ord": None}
 Pintes={}
 Liste_monstre = [Master,Fou,Bibbendum1,Bibbendum2,Bibbendum3]
 Plateau=[]
