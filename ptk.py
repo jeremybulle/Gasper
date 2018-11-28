@@ -305,6 +305,8 @@ def Trigger(Gasper):
                 showinfo("Warning","Gasper entend un rire sardonique")
             elif (Monstre == Bibbendum1 or Monstre == Bibbendum2 or Monstre == Bibbendum3):
                 showinfo("Warning","Gasper sent une odeur alléchante de chamallow à la fraise")
+        else :
+            mv=2
     for k in Pintes.keys():
         if (Pintes[k]["abs"]==Gasper["abs"] and Pintes[k]["ord"]==Gasper["ord"]):
             if Pintes[k]["nb"]==0:
