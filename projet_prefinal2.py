@@ -129,7 +129,7 @@ def gauche(i,j,prev,grille):
     grille[i][j]=prev
     if Limite(i,j-1,grille)!=True:
         value=position(i,j-1,grille)
-        mv=Trigger(lm,Gasper,Pintes)
+        mv=Trigger(Liste_monstre,Gasper,Pintes)
         if mv==1:
             x1,y1,value1=Retour_recep()
             grille[i][j-1]=value

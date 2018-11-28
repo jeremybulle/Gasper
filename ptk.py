@@ -253,6 +253,7 @@ def Retour_recep () :
     global x
     global y
     global value
+    showinfo("Cher visiteur","Laissez-moi vous raccompagner à l'entrée de ma demeure")
     position(8,4,Plateau)
     x=8
     y=4
@@ -289,7 +290,6 @@ def Trigger(joueur,listm,dicP):
         if (Monstre["abs"]==joueur["abs"] and Monstre["ord"]==joueur["ord"]):
             if Monstre == Master:
                 mv=1
-                showinfo("Cher visiteur","Laissez-moi vous raccompagner à l'entrée de ma demeure")
                 return mv
             elif Monstre == Fou :
                 mv=0
