@@ -97,7 +97,7 @@ def droite(i,j,prev,grille):
             Retour_recep(i,j,Gasper)
             grille[i][j+1]=value
         elif mv==0 :
-            Fou_depl(i,j,Gasper,Index_room)
+            Fou_depl(Index_room)
             grille[i][j+1]=value
             Trigger(Gasper)
         else :
@@ -122,7 +122,7 @@ def gauche(i,j,prev,grille):
             Retour_recep(i,j,Gasper)
             grille[i][j-1]=value
         elif mv==0 :
-            Fou_depl(i,j,Gasper,Index_room)
+            Fou_depl(Index_room)
             grille[i][j-1]=value
             Trigger(Gasper)
         else :
@@ -148,7 +148,7 @@ def haut(i,j,prev,grille):
             Retour_recep(i,j,Gasper)
             grille[i-1][j]=value
         elif mv==0 :
-            Fou_depl(i,j,Gasper,Index_room)
+            Fou_depl(Index_room)
             grille[i-1][j]=value
             Trigger(Gasper)
         else :
@@ -173,7 +173,7 @@ def bas(i,j,prev,grille):
             Retour_recep(i,j,Gasper)
             grille[i+1][j]=value
         elif mv==0 :
-            Fou_depl(i,j,Gasper,Index_room)
+            Fou_depl(Index_room)
             grille[i+1][j]=value
             Trigger(Gasper)
         else :
@@ -264,7 +264,7 @@ def Fou_take_pinte(Gasper):
     Gasper["pinte"] = Gasper["pinte"] - 1 #modifie la valeur dans le dict Gasper
     showinfo("Comment oses-tu rentrer dans mon laboratoire ?","Gasper perd une pinte d'energie, il lui reste %d pinte(s) d'energie"%(Gasper['pinte']))
 
-def Fou_depl(i,j,Gasper,Index_room):
+def Fou_depl(Index_room):
     """pouvoir du Fou qui modifie de manière aléatoire la position de Gasper"""
     global x
     global y
@@ -305,8 +305,6 @@ def Trigger(Gasper):
                 showinfo("Warning","Gasper entend un rire sardonique")
             elif (Monstre == Bibbendum1 or Monstre == Bibbendum2 or Monstre == Bibbendum3):
                 showinfo("Warning","Gasper sent une odeur alléchante de chamallow à la fraise")
-        else :
-            mv=2
     for k in Pintes.keys():
         if (Pintes[k]["abs"]==Gasper["abs"] and Pintes[k]["ord"]==Gasper["ord"]):
             if Pintes[k]["nb"]==0:
@@ -315,22 +313,24 @@ def Trigger(Gasper):
                 showinfo("Bar","Oh de l'ectoplasme !! Gasper gagne %d pintes"%(Pintes[k]["nb"]))
                 Gasper["pinte"]=Gasper["pinte"]+Pintes[k]["nb"]
                 Pintes[k]["nb"]=0
+#Main
 
+if __name__ == '__main__':
+    
 #Intitialisation:
 
 #Plateau de jeu
-Index_pop = [] # contient des indices x générés alétoirement => Index_room[x] = coordonnees de la salle dans lequelle il y a le monstre qui a obtenue l'indice X
-Index_room = [[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]] #liste des salle du chateau 
-Gasper = {"abs" : 0, "ord" : 0, "pinte" : 3}
-Master = {"abs" : None, "ord" : None}
-Fou = {"abs": None, "ord": None}
-Bibbendum1 = {"abs": None, "ord": None}
-Bibbendum2 = {"abs": None, "ord": None}
-Bibbendum3 = {"abs": None, "ord": None}
-Pintes={}
-Liste_monstre = [Master,Fou,Bibbendum1,Bibbendum2,Bibbendum3]
+    Index_pop = [] # contient des indices x générés alétoirement => Index_room[x] = coordonnees de la salle dans lequelle il y a le monstre qui a obtenue l'indice X
+    Index_room = [[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]] #liste des salle du chateau 
+    Gasper = {"abs" : 0, "ord" : 0, "pinte" : 3}
+    Master = {"abs" : None, "ord" : None}
+    Fou = {"abs": None, "ord": None}
+    Bibbendum1 = {"abs": None, "ord": None}
+    Bibbendum2 = {"abs": None, "ord": None}
+    Bibbendum3 = {"abs": None, "ord": None}
+    Pintes={}
+    Liste_monstre = [Master,Fou,Bibbendum1,Bibbendum2,Bibbendum3]
 
-if __name__ == '__main__':
 #Creation de la fenetre
     f=Tk()
     f.title("Gasper")
@@ -349,7 +349,6 @@ if __name__ == '__main__':
     Pop_monstre(Pintes,Liste_monstre,Index_pop)
 
 #Bouton deplacement
-
     boutonl=Button(cadre,text="Gauche",command=lambda: gauche(x,y,value,Plateau))
     boutonr=Button(cadre,text="Droite",command=lambda: droite(x,y,value,Plateau))
     boutonu=Button(cadre,text="Haut",command=lambda: haut(x,y,value,Plateau))
@@ -364,6 +363,5 @@ if __name__ == '__main__':
     boutonq.grid(row=2,column=4)
     boutonres=Button(cadre,text="Restart",command=restart_programme)
     boutonres.grid(row=2,column=1)
-    
-#Main
+
     f.mainloop()

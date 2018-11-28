@@ -113,7 +113,7 @@ def droite(i,j,prev,grille):
             grille[i][j+1]=value
             return x1,y1,value1
         elif mv==0 :
-            x1,y1,value1=Fou_depl(i,j,Gasper,Index_room)
+            x1,y1,value1=Fou_depl(Index_room)
             grille[i][j+1]=value
             mv=Trigger(Gasper)
             return x1,y1,value1
@@ -135,7 +135,7 @@ def gauche(i,j,prev,grille):
             grille[i][j-1]=value
             return x1,y1,value1
         elif mv==0 :
-            x1,y1,value1=Fou_depl(i,j,Gasper,Index_room)
+            x1,y1,value1=Fou_depl(Index_room)
             grille[i][j+1]=value
             mv=Trigger(Gasper)
             return x1,y1,value1
@@ -157,7 +157,7 @@ def haut(i,j,prev,grille):
             grille[i-1][j]=value
             return x1,y1,value1
         elif mv==0 :
-            x1,y1,value1=Fou_depl(i,j,Gasper,Index_room)
+            x1,y1,value1=Fou_depl(Index_room)
             mv=Trigger(Gasper)
             grille[i-1][j]=value
             return x1,y1,value1
@@ -179,7 +179,7 @@ def bas(i,j,prev,grille):
             grille[i+1][j]=value
             return x1,y1,value1
         elif mv==0 :
-            x1,y1,value1=Fou_depl(i,j,Gasper,Index_room)
+            x1,y1,value1=Fou_depl(Index_room)
             mv=Trigger(Gasper)
             grille[i+1][j]=value
             return x1,y1,value1
@@ -266,7 +266,7 @@ def Fou_take_pinte(Gasper):
     Gasper["pinte"] = Gasper["pinte"] - 1 #modifie la valeur dans le dict Gasper
     print "Gasper perd une pinte d'ectoplasme, il lui reste %d pinte(s) d'energie"%(Gasper["pinte"])
 
-def Fou_depl(x,y,Gasper,Index_room):
+def Fou_depl(Index_room):
     """pouvoir du Fou qui modifie de manière aléatoire la position de Gasper"""
     i = random.randint(0,11)
     x = Index_room[i][0]
@@ -302,8 +302,6 @@ def Trigger(Gasper):
                 print("Gasper entend un rire sardonique")
             elif (Monstre == Bibbendum1 or Monstre == Bibbendum2 or Monstre == Bibbendum3):
                 print("Gasper sent une odeur alléchante de chamallow à la fraise")
-        else :
-            mv=2
     for k in Pintes.keys():
         if (Pintes[k]["abs"]==Gasper["abs"] and Pintes[k]["ord"]==Gasper["ord"]):
             if Pintes[k]["nb"]==0:
@@ -313,26 +311,25 @@ def Trigger(Gasper):
                 Gasper["pinte"]=Gasper["pinte"]+Pintes[k]["nb"]
                 Pintes[k]["nb"]=0
 
+#Main
 
+
+if __name__ == '__main__':
+    
 #Intitialisation:
 
 #Plateau de jeu
-Index_pop = [] # contient des indices x générés alétoirement => Index_room[x] = coordonnees de la salle dans lequelle il y a le monstre qui a obtenue l'indice X
-Index_room = [[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]] #liste des salle du chateau Index_room[4,0] = reception , Index_room[10,8]=paradis
-Gasper = {"abs" : 0, "ord" : 0, "pinte" : 3}
-Master = {"abs" : None, "ord" : None}
-Fou = {"abs": None, "ord": None}
-Bibbendum1 = {"abs": None, "ord": None}
-Bibbendum2 = {"abs": None, "ord": None}
-Bibbendum3 = {"abs": None, "ord": None}
-Pintes={}
-Liste_monstre = [Master,Fou,Bibbendum1,Bibbendum2,Bibbendum3]
-Plateau=[]
-
-#Main
-
-if __name__ == '__main__':
-
+    Index_pop = [] # contient des indices x générés alétoirement => Index_room[x] = coordonnees de la salle dans lequelle il y a le monstre qui a obtenue l'indice X
+    Index_room = [[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]] #liste des salle du chateau Index_room[4,0] = reception , Index_room[10,8]=paradis
+    Gasper = {"abs" : 0, "ord" : 0, "pinte" : 3}
+    Master = {"abs" : None, "ord" : None}
+    Fou = {"abs": None, "ord": None}
+    Bibbendum1 = {"abs": None, "ord": None}
+    Bibbendum2 = {"abs": None, "ord": None}
+    Bibbendum3 = {"abs": None, "ord": None}
+    Pintes={}
+    Liste_monstre = [Master,Fou,Bibbendum1,Bibbendum2,Bibbendum3]
+    Plateau=[]
     Plateau=BuildCastle()
     x=8
     y=4
