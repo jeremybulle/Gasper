@@ -97,8 +97,8 @@ def droite(i,j,prev,grille):
             Retour_recep(x,y,value)
             grille[i][j+1]=value
         elif mv==0 :
-            Fou_depl(x,y,value,Index_room)
             grille[i][j+1]=value
+            Fou_depl(i,j,prev,Index_room)
             Trigger(Gasper,Liste_monstre,Pintes)
         else :
             x=i
