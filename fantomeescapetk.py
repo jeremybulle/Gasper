@@ -94,11 +94,9 @@ def droite(i,j,prev,grille):
         position(i,j+1,grille)
         Trigger(Gasper,Liste_monstre,Pintes)
         if mv==1:
-            Retour_recep(x,y,value)
-            grille[i][j+1]=value
+            Retour_recep(i,j+1,prev)
         elif mv==0 :
-            grille[i][j+1]=value
-            Fou_depl(i,j,prev,Index_room)
+            Fou_depl(i,j+1,prev,Index_room)
             Trigger(Gasper,Liste_monstre,Pintes)
         else :
             x=i
@@ -119,11 +117,9 @@ def gauche(i,j,prev,grille):
         position(i,j-1,grille)
         Trigger(Gasper,Liste_monstre,Pintes)
         if mv==1:
-            Retour_recep(x,y,value)
-            grille[i][j-1]=value
+            Retour_recep(i,j-1,prev)
         elif mv==0 :
-            Fou_depl(x,y,value,Index_room)
-            grille[i][j-1]=value
+            Fou_depl(i,j-1,prev,Index_room)
             Trigger(Gasper,Liste_monstre,Pintes)
         else :
             x=i
@@ -145,11 +141,9 @@ def haut(i,j,prev,grille):
         position(i-1,j,grille)
         Trigger(Gasper,Liste_monstre,Pintes)
         if mv==1:
-            Retour_recep(x,y,value)
-            grille[i-1][j]=value
+            Retour_recep(i-1,j,prev)
         elif mv==0 :
-            Fou_depl(x,y,value,Index_room)
-            grille[i-1][j]=value
+            Fou_depl(i-1,j,prev,Index_room)
             Trigger(Gasper,Liste_monstre,Pintes)
         else :
             x=i-1
@@ -170,11 +164,9 @@ def bas(i,j,prev,grille):
         position(i+1,j,grille)
         Trigger(Gasper,Liste_monstre,Pintes)
         if mv==1:
-            Retour_recep(x,y,value)
-            grille[i+1][j]=value
+            Retour_recep(i+1,j,value)
         elif mv==0 :
-            Fou_depl(x,y,value,Index_room)
-            grille[i+1][j]=value
+            Fou_depl(i+1,j,value,Index_room)
             Trigger(Gasper,Liste_monstre,Pintes)
         else :
             x=i+1
@@ -254,7 +246,7 @@ def Retour_recep (i,j,prev) :
     global y
     global value
     showinfo("Cher visiteur","Laissez-moi vous raccompagner à l'entrée de ma demeure")
-    grille[i][j]=prev
+    Plateau[i][j]=prev
     position(8,4,Plateau)
     x=8
     y=4
@@ -274,7 +266,7 @@ def Fou_depl(i,j,prev,listR):
     r = random.randint(0,11)
     x = listR[r][0]
     y = listR[r][1]
-    grille[i][j]=prev
+    Plateau[i][j]=prev
     position(x,y,Plateau)
 
 #Chamallow bibbendum:
