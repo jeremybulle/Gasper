@@ -37,11 +37,11 @@ def menu(grille):
 def BuildCastle(n):
     """ Construction des éléments du chateau """
     if n==2:
-        grille=[[" "," "," "," "," "," "," "," "," "," ","R"," "," "],[0,"*","*",0,"*","*",0,"*","*",0,"*"," "," "],
-        ["*"," "," "," "," "," "," "," "," "," ","*"," "," "],["*"," ",0,"*","*","*",0," "," "," ","*"," "," "],
+        grille=[[" "," "," "," "," "," "," "," "," "," ","R"," "," "],[0,"*","*","*","*","*",0,"*","*"," ","*"," "," "],
+        ["*"," "," "," ","*"," "," "," ",0,"*","*"," "," "],["*","*",0,"*","*","*",0," "," "," ","*"," "," "],
         [0," ","*"," "," "," ","*"," "," "," ",0," "," "],["*"," ","P"," "," "," ","*"," "," "," ","*"," "," "],
-        ["*"," ","*"," "," "," ",0,"*","*","*","*"," "," "],["*"," ","*"," "," "," ","*"," "," "," "," "," "," "],
-        [0,"*","*","*",0,"*","*"," "," "," "," "," "," "]]
+        ["*"," ","*"," "," "," ",0,"*","*","*","*"," "," "],["*"," ","*"," "," "," ","*"," "," "," ","*"," "," "],
+        [0,"*","*","*",0,"*","*","*","*","*",0," "," "]]
         return grille
     elif n==1:
         grille=[[" "," ","*","*","*","*","*"," "," "," ","E"," "," "],[" "," ","*"," "," "," ","*"," "," "," ","*"," "," "],
@@ -54,7 +54,7 @@ def BuildCastle(n):
 
 def Salle(n):
     if n==2:
-        salle=[[8,0],[4,0],[1,0],[6,2],[3,2],[1,3],[8,4],[6,6],[3,6],[1,6],[1,9],[4,10]]
+        salle=[[8,0],[4,0],[1,0],[2,8],[3,2],[1,3],[8,4],[6,6],[3,6],[1,6],[8,10],[4,10]]
         return salle
     elif n==1:
         salle=[[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]]
@@ -109,7 +109,7 @@ def position(i,j,grille):
         y=10
         value=position(x,y,Plateau)
         Pop_pinte(Pintes)
-        Pop_monstre(Pintes,Liste_monstre)
+        Pop_monstre(Pintes,Liste_monstre,Index_room)
         print Liste_monstre
         return value
     # Si Gasper n'a plus de pintes, il perd"
@@ -151,7 +151,7 @@ def droite(i,j,prev,grille):
         value=position(i,j+1,grille)
         mv=Trigger(Liste_monstre,Gasper,Pintes)
         if mv==1:
-            x1,y1,value1=Retour_recep(n)
+            x1,y1,value1=Retour_recep(level)
             grille[i][j+1]=value
             return x1,y1,value1
         elif mv==0 :
@@ -173,7 +173,7 @@ def gauche(i,j,prev,grille):
         value=position(i,j-1,grille)
         mv=Trigger(Liste_monstre,Gasper,Pintes)
         if mv==1:
-            x1,y1,value1=Retour_recep(n)
+            x1,y1,value1=Retour_recep(level)
             grille[i][j-1]=value
             return x1,y1,value1
         elif mv==0 :
@@ -195,7 +195,7 @@ def haut(i,j,prev,grille):
         value=position(i-1,j,grille)
         mv=Trigger(Liste_monstre,Gasper,Pintes)
         if mv==1:
-            x1,y1,value1=Retour_recep(n)
+            x1,y1,value1=Retour_recep(level)
             grille[i-1][j]=value
             return x1,y1,value1
         elif mv==0 :
@@ -217,7 +217,7 @@ def bas(i,j,prev,grille):
         value=position(i+1,j,grille)
         mv=Trigger(Liste_monstre,Gasper,Pintes)
         if mv==1:
-            x1,y1,value1=Retour_recep(n)
+            x1,y1,value1=Retour_recep(level)
             grille[i+1][j]=value
             return x1,y1,value1
         elif mv==0 :
