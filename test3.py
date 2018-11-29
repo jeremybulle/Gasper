@@ -64,10 +64,10 @@ def Salle(n):
 
 def choix_monstre(n):
     if n==1:
-        choix=[Master,Fou,Bibbendum1,Bibbendum2,Bibbendum3]
+        choix={"Master" : {"abs": None, "ord": None},"Fou" :{"abs": None, "ord": None}, "Bibbendum1": {"abs": None, "ord": None},"Bibbendum2": {"abs": None, "ord": None}, "Bibbendum3": {"abs": None, "ord": None}}
         return choix
     if n==2:
-        choix=[Master,Fou,Bibbendum1,Gobelin]
+        choix={"Mastrer" : {"abs": None, "ord": None},"Fou": {"abs": None, "ord": None},"Bibbendum1": {"abs": None, "ord": None}, "Gobelin" : {"abs": None, "ord": None}}
         return choix
 
 def afficher(grille):
@@ -112,6 +112,7 @@ def position(i,j,grille):
         Index_pop = []
         Pop_pinte(Pintes)
         Pop_monstre(Pintes,Liste_monstre,Index_pop)
+        print Liste_monstre["Gobelin"]["abs"], Liste_monstre["Gobelin"]["ord"]
         return value
     # Si Gasper n'a plus de pintes, il perd"
     elif Gasper["pinte"]<0 or Gasper["pinte"]==0:
@@ -269,13 +270,13 @@ def Pop_pinte(dict_pinte):
 def Pop_monstre(D,lm,Ip):
     """fonction qui attribue les coordonnées à tous les monstres"""
     #Ip = [] #reset l indice de pop si on veut faire repop les monstres de maniere aleatoire(sans que l ancien pop influe)
-    for M in lm:
+    for M in lm.keys() :
         x = random.randint(0,11) # génère un indice aléatoire
         while Is_monstre(Ip,x) == True : #vérifie si l'indice est attribué à un autre monstre , si c est le cas relance random.randit
             x = random.randint(0,11)
         Ip.append(x) # note l'attribution d'indice dans Index_pop
-        M["ord"] = Index_room[x][0] # modifie l'abs du monstre grace a l Index_room
-        M["abs"] = Index_room[x][1] # modifie l ord du monstre grace a l Index_room
+        lm[M]["ord"] = Index_room[x][0] # modifie l'abs du monstre grace a l Index_room
+        lm[M]["abs"] = Index_room[x][1] # modifie l ord du monstre grace a l Index_room
     for k in D.keys(): #Attribution des valeurs de salle aux pintes
         x = random.randint(0,11)
         while Is_monstre(Ip,x) == True :
@@ -284,11 +285,11 @@ def Pop_monstre(D,lm,Ip):
         D[k]["ord"]=Index_room[x][0]
         D[k]["abs"]=Index_room[x][1]
 
-def Is_one_case_range(Monstre,joueur):
+def Is_one_case_range(Monstre,joueur,lm):
     """focntion qui verifie s'il y a un monstre à une case de Gasper"""
-    if ((Monstre["ord"] == (joueur["ord"] +1) or Monstre["ord"] == (joueur["ord"] - 1)) and Monstre["abs"] == joueur["abs"]): #monstre une case au dessus ou en dessous
+    if ((lm[Monstre]["ord"] == (joueur["ord"] +1) or lm[Monstre]["ord"] == (joueur["ord"] - 1)) and lm[Monstre]["abs"] == joueur["abs"]): #monstre une case au dessus ou en dessous
         return True
-    elif ((Monstre["abs"] == (joueur["abs"] +1) or Monstre["abs"] == (joueur["abs"] - 1)) and Monstre["ord"] == joueur["ord"]): #monstre uns case à gauche ou à droite
+    elif ((lm[Monstre]["abs"] == (joueur["abs"] +1) or lm[Monstre]["abs"] == (joueur["abs"] - 1)) and lm[Monstre]["ord"] == joueur["ord"]): #monstre uns case à gauche ou à droite
         return True
     else :
         return False
@@ -329,7 +330,7 @@ def Bib_take_pinte(joueur):
     print "Gasper paralysé perd deux pintes d'ectoplasme, il lui reste %d pinte(s) d'ectoplasme"%(joueur["pinte"])
 
 #Gobelin
-def Gobelin_skill(joueur, Ip):
+def Gobelin_skill(joueur, Ip, lm):
     """Le gobelin vole 1 pinte a Gasper et se téléporte dans une autre pièce
     attention, le gobelin doit etre placer à la dernière positon de la Liste_monstre"""
     joueur["pinte"] = joueur["pinte"] - 2
@@ -338,36 +339,37 @@ def Gobelin_skill(joueur, Ip):
     while Is_monstre(Ip,x) == True : #vérifie si l'indice est attribué à un autre monstre , si c est le cas relance random.randit
         x = random.randint(0,11)
     Ip[3]= x # modifie le nouvel intice attribué au gobelin
-    Gobelin["ord"] = Index_room[x][0] # modifie l'abs du Gobelin grace a l Index_room
-    Gobelin["abs"] = Index_room[x][1] # modifie l ord du Gobelin grace a l Index_room
+    lm["Gobelin"]["ord"] = Index_room[x][0] # modifie l'abs du Gobelin grace a l Index_room
+    lm["Gobelin"]["abs"] = Index_room[x][1] # modifie l ord du Gobelin grace a l Index_room
 
 
 
 #Trigger à poser apres chaque deplacement:
 def Trigger(lm,joueur,D,Ip):
-    for Monstre in lm:
-        if (Monstre["abs"]==joueur["abs"] and Monstre["ord"]==joueur["ord"]): #Si les positions sont identiques
-            if Monstre == Master:
+    for Monstre in lm.keys():
+        if (lm[Monstre]["abs"]==joueur["abs"] and lm[Monstre]["ord"]==joueur["ord"]): #Si les positions sont identiques
+            if Monstre == "Master":
                 mv=1
                 return mv
-            elif Monstre == Fou :
+            elif Monstre == "Fou" :
                 mv=0
                 Fou_take_pinte(joueur)
                 return mv
                 Trigger(joueur)
-            elif (Monstre == Bibbendum1 or Monstre == Bibbendum2 or Monstre == Bibbendum3):
-                Bib_take_pinte(joueur)
-            elif Monstre == Gobelin :
+            elif Monstre == "Gobelin" :
                 Gobelin_skill(joueur,Ip)
-        elif Is_one_case_range(Monstre,joueur) == True : #Si la position de Gasper -1 de la position des monstres
-            if Monstre == Master :
+            elif (Monstre == "Bibbendum1" or Monstre == "Bibbendum2" or Monstre == "Bibbendum3"):
+                Bib_take_pinte(joueur)
+        elif Is_one_case_range(Monstre,joueur,Liste_monstre) == True : #Si la position de Gasper -1 de la position des monstres
+            if Monstre == "Master" :
                 print("Gasper entend un bruit de clé")
-            elif Monstre == Fou :
+            elif Monstre == "Fou" :
                 print("Gasper entend un rire sardonique")
-            elif (Monstre == Bibbendum1 or Monstre == Bibbendum2 or Monstre == Bibbendum3):
-                print("Gasper sent une odeur alléchante de chamallow à la fraise")
-            elif Monstre == Gobelin :
+            elif Monstre == "Gobelin" :
                 print ("Gasper entend un petit ricanement")
+            elif (Monstre == "Bibbendum1" or Monstre == "Bibbendum2" or Monstre == "Bibbendum3"):
+                print("Gasper sent une odeur alléchante de chamallow à la fraise")
+
         else :
             mv=2
     for k in D.keys():
