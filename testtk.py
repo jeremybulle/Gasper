@@ -15,16 +15,16 @@ def restart_programme():
     os.execl(python, python, * sys.argv)
 
 def BuildCastle(n):
-    """ Construction du chateau """
+    """ Construction des éléments du chateau """
     if n==2:
-        grille=[[" "," "," "," "," "," "," "," "," "," "," "," "," "],[0,"*","*",0,"*","*",0,"*","*",0,"*"," "," "],
-        ["*"," "," "," "," "," "," "," "," "," ","*"," "," "],["*"," ",0,"*","*","*",0," "," "," ","*"," "," "],
-        [0," ","*"," ","*"," ","*"," "," "," ",0," "," "],["*"," ","*"," ","P"," ","*"," "," "," ","*"," "," "],
-        ["*"," ",0," "," "," ",0,"*","*","*","*"," "," "],["*"," ","*"," "," "," ","*"," "," "," ","R"," "," "],
-        [0,"*","*","*",0,"*","*"," "," "," "," "," "," "]]
+        grille=[[" "," "," "," "," "," "," "," "," "," ","R"," "," "],[0,"*","*","*","*","*",0,"*","*"," ","*"," "," "],
+        ["*"," "," "," ","*"," "," "," ",0,"*","*"," "," "],["*","*",0,"*","*","*",0," "," "," ","*"," "," "],
+        [0," ","*"," "," "," ","*"," "," "," ",0," "," "],["*"," ","P"," "," "," ","*"," "," "," ","*"," "," "],
+        ["*"," ","*"," "," "," ",0,"*","*","*","*"," "," "],["*"," ","*"," "," "," ","*"," "," "," ","*"," "," "],
+        [0,"*","*","*",0,"*","*","*","*","*",0," "," "]]
         return grille
     elif n==1:
-        grille=[[" "," ","*","*","*","*","*"," "," "," ","P"," "," "],[" "," ","*"," "," "," ","*"," "," "," ","*"," "," "],
+        grille=[[" "," ","*","*","*","*","*"," "," "," ","E"," "," "],[" "," ","*"," "," "," ","*"," "," "," ","*"," "," "],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],["*"," ","*"," "," "," ","*"," "," "," ","*"," ","*"],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],["*"," ","*"," "," "," ","*"," "," "," ","*"," ","*"],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],[" "," ","*"," "," "," ","*"," "," "," "," "," "," "],
@@ -33,11 +33,20 @@ def BuildCastle(n):
 
 def Salle(n):
     if n==2:
-        salle=[[8,0],[4,0],[1,0],[6,2],[3,2],[1,3],[8,4],[6,6],[3,6],[1,6],[1,9],[4,10]]
+        salle=[[8,0],[4,0],[1,0],[2,8],[3,2],[1,3],[8,4],[6,6],[3,6],[1,6],[8,10],[4,10]]
         return salle
     elif n==1:
         salle=[[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]]
         return salle
+    
+def choix_monstre(n):
+    if n==1:
+        choix=[Master,Fou,Bibbendum1,Bibbendum2,Bibbendum3]
+        return choix
+    if n==2:
+        choix=[Master,Fou,Bibbendum1]
+        return choix
+        
 
 def Chateautk(w,grille):
     size=len(grille)
@@ -77,18 +86,25 @@ def position(i,j,grille):
     if value=="P":
         grille[i][j]="&"
         Chateautk(frame,grille)
-        result=askquestion("Victoire","Veux-tu aller au deuxième étage ?")
+        result=askyesno("Victoire","Veux tu recommencer ?")
         if result=="no":
             showinfo("Gasper","Gasper rejoint le paradis des fantômes")
             f.quit()
         elif result=="yes":
-            Plateau=BuildCastle(2)
-            Index_room=Salle(2)
-            Chateautk(frame,Plateau)
-            x=7
-            y=10
-            position(x,y,Plateau)
-            n=2
+            restart_program()
+    elif value=="E":
+        grille[i][j]="&"
+        showinfo("Ascenseur","Veuillez monter dans l'ascenseur")
+        level=2
+        Plateau=BuildCastle(level)
+        Index_room=Salle(level)
+        Liste_monstre=choix_monstre(level)
+        x=0
+        y=10
+        position(x,y,Plateau)
+        Pop_pinte(Pintes)
+        Pop_monstre(Pintes,Liste_monstre,Index_pop,Index_room)
+        return value
     elif Gasper["pinte"]<0 or Gasper["pinte"]==0:
         result=askquestion("RIP", "Oh non Gasper a diparu ! Veux-tu recommencer ?")
         if result=="no":
