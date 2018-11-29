@@ -1,26 +1,27 @@
 # -*-coding:utf-8 -*
+#Python 2.7
+#Jeu Escape Game 
+#Jéremy BULLE et Domitille COQ--ETCHEGARAY
+#Master 1 Bio-Informatique 2018-2019
 
-"""ce programme est un jeu, où l'utilisateur déplace un fantôme appelé Gasper.
+"""Ce programme est un jeu, où l'utilisateur déplace un fantôme appelé Gasper.
 Le but du jeu est de rejoindre le paradis en traversant le chateau tout en évitant
 les monstres. Gasper doit toujours avoir au moins une pinte dans son inventaire,
 si ce n'est pas la cas, c'est Game Over."""
 
-#importation des modules
+#Importation des modules
 import sys
 import os
 import random
 
+#Fonctions
 def restart_program():
     """Relance le programme en cours"""
     python = sys.executable
     os.execl(python, python, * sys.argv)
 
-#Fonctions liées à la construction du chateau
-
 def menu(grille):
     """affichage de l'interface avec l'utilisateur"""
-    print Index_pop
-    print Index_room
     afficher(grille)
     print ("Gasper possède {0} pinte(s)".format(Gasper["pinte"]))
     print ( "6- Droite")
@@ -31,44 +32,29 @@ def menu(grille):
     try :
         answer=int(input())
         return answer
-    except SyntaxError: # si l'utilisatuer appuie sur la touche entrée sans ajouter de valeur
+    except SyntaxError: # si l'utilisateur appuie sur la touche entrée sans ajouter de valeur
         pass
     except NameError : # si l'utilisateur entre une str au lieu d'un int
         pass
 
+#Fonctions liées à la construction du chateau
+
 def BuildCastle(n):
     """ Construction des éléments du chateau """
-    if n==2:
-        grille=[[" "," "," "," "," "," "," "," "," "," ","R"," "," "],[0,"*","*","*","*","*",0,"*","*"," ","*"," "," "],
-        ["*"," "," "," ","*"," "," "," ",0,"*","*"," "," "],["*","*",0,"*","*","*",0," "," "," ","*"," "," "],
-        [0," ","*"," "," "," ","*"," "," "," ",0," "," "],["*"," ","*"," "," "," ","*"," "," "," ","*"," "," "],
-        ["*"," ","P"," "," "," ",0,"*","*","*","*"," "," "],["*"," ","*"," "," "," ","*"," "," "," ","*"," "," "],
-        [0,"*",00,"*",0,"*","*","*","*","*",0," "," "]]
-        return grille
-    elif n==1:
+    if n==1:
         grille=[[" "," ","*","*","*","*","*"," "," "," ","E"," "," "],[" "," ","*"," "," "," ","*"," "," "," ","*"," "," "],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],["*"," ","*"," "," "," ","*"," "," "," ","*"," ","*"],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],["*"," ","*"," "," "," ","*"," "," "," ","*"," ","*"],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],[" "," ","*"," "," "," ","*"," "," "," "," "," "," "],
         [" "," ","*","*","R","*","*"," "," "," "," "," "," "]]
         return grille
-
-
-def Salle(n):
-    if n==2:
-        salle=[[8,0],[4,0],[1,0],[3,2],[8,2],[8,4],[1,6],[3,6],[6,6],[2,8],[4,10],[8,10]]
-        return salle
-    elif n==1:
-        salle=[[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]]
-        return salle
-
-def choix_monstre(n):
-    if n==1:
-        choix={"Master" : {"abs": None, "ord": None},"Fou" :{"abs": None, "ord": None}, "Bibbendum1": {"abs": None, "ord": None},"Bibbendum2": {"abs": None, "ord": None}, "Bibbendum3": {"abs": None, "ord": None}}
-        return choix
-    if n==2:
-        choix={"Mastrer" : {"abs": None, "ord": None},"Fou": {"abs": None, "ord": None},"Bibbendum1": {"abs": None, "ord": None}, "Gobelin" : {"abs": None, "ord": None}}
-        return choix
+    elif n==2: #Level 2
+        grille=[[" "," "," "," "," "," "," "," "," "," ","R"," "," "],[0,"*","*","*","*","*",0,"*","*"," ","*"," "," "],
+        ["*"," "," "," ","*"," "," "," ",0,"*","*"," "," "],["*","*",0,"*","*","*",0," "," "," ","*"," "," "],
+        [0," ","*"," "," "," ","*"," "," "," ",0," "," "],["*"," ","*"," "," "," ","*"," "," "," ","*"," "," "],
+        ["*"," ","P"," "," "," ",0,"*","*","*","*"," "," "],["*"," ","*"," "," "," ","*"," "," "," ","*"," "," "],
+        [0,"*",0,"*",0,"*","*","*","*","*",0," "," "]]
+        return grille
 
 def afficher(grille):
     """Affichage du chateau sur le terminal"""
@@ -77,6 +63,14 @@ def afficher(grille):
         for j in grille[i]:
             print j,
         print " "
+
+def Salle(n):
+    if n==1:
+        salle=[[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]]
+        return salle
+    elif n==2: #Level 2
+        salle=[[8,0],[4,0],[1,0],[3,2],[8,2],[8,4],[1,6],[3,6],[6,6],[2,8],[4,10],[8,10]]
+        return salle
 
 #Fonctions liées à la position de Gasper
 
@@ -101,6 +95,7 @@ def position(i,j,grille):
             sys.exit()
         if flag == 2 :
             restart_program()
+    # Si la valeur temporaire correspond à la valeur E : Etage le gagne monte à l'étage suivant 
     elif value=="E":
         print "Veuillez monter dans l'ascenseur"
         level=2
@@ -113,7 +108,6 @@ def position(i,j,grille):
         Index_pop = []
         Pop_pinte(Pintes)
         Pop_monstre(Pintes,Liste_monstre,Index_pop,Index_room)
-        print Liste_monstre["Gobelin"]["ord"], Liste_monstre["Gobelin"]["abs"]
         return value
     # Si Gasper n'a plus de pintes, il perd"
     elif Gasper["pinte"]<0 or Gasper["pinte"]==0:
@@ -133,9 +127,10 @@ def position(i,j,grille):
         return value
 
 def Limite(i,j,grille):
-    """délimite l'espace du terrain de jeu"""
+    """Délimite l'espace du terrain de jeu"""
     size=len(grille)
     size1=len(grille[0])
+    # Limite de la matrice 
     if i>size-1 :
         return True
     elif j>size1-1:
@@ -144,23 +139,24 @@ def Limite(i,j,grille):
         return True
     elif j==-1:
         return True
+    # Si jamais la valeur temporaire est " " Gasper rencontre un mur et ne peut pas passer
     elif grille[i][j]==" ":
         return True
 
-def droite(i,j,prev,grille):
+def droite(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     """ déplace Gasper d'une case vers la droite"""
     grille[i][j]=prev
     if Limite(i,j+1,grille)!=True:
         value=position(i,j+1,grille)
-        mv=Trigger(Liste_monstre,Gasper,Pintes,Index_pop)
+        mv=Trigger(lm,joueur,dp,Ip)
         if mv==1:
-            x1,y1,value1=Retour_recep(level)
+            x1,y1,value1=Retour_recep(n)
             grille[i][j+1]=value
             return x1,y1,value1
         elif mv==0 :
-            x1,y1,value1=Fou_depl(Index_room)
+            x1,y1,value1=Fou_depl(i,j+1,grille,value,Ir)
             grille[i][j+1]=value
-            mv=Trigger(Liste_monstre,Gasper,Pintes,Index_pop)
+            mv=Trigger(lm,joueur,dp,Ip)
             return x1,y1,value1
         else :
             return i,j+1,value
@@ -169,20 +165,20 @@ def droite(i,j,prev,grille):
         print("Mouvement impossible")
         return i,j,value
 
-def gauche(i,j,prev,grille):
+def gauche(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     """ déplace Gasper d'une case vers la gauche"""
     grille[i][j]=prev
     if Limite(i,j-1,grille)!=True:
         value=position(i,j-1,grille)
-        mv=Trigger(Liste_monstre,Gasper,Pintes,Index_pop)
+        mv=Trigger(lm,joueur,dp,Ip)
         if mv==1:
-            x1,y1,value1=Retour_recep(level)
+            x1,y1,value1=Retour_recep(n)
             grille[i][j-1]=value
             return x1,y1,value1
         elif mv==0 :
-            x1,y1,value1=Fou_depl(Index_room)
+            x1,y1,value1=Fou_depl(i,j-1,grille,value,Ir)
             grille[i][j+1]=value
-            mv=Trigger(Liste_monstre,Gasper,Pintes,Index_pop)
+            mv=Trigger(lm,joueur,dp,Ip)
             return x1,y1,value1
         else :
             return i,j-1,value
@@ -191,19 +187,19 @@ def gauche(i,j,prev,grille):
         print ("Mouvement impossible")
         return i,j,value
 
-def haut(i,j,prev,grille):
+def haut(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     """ déplace Gasper d'une case vers le haut"""
     grille[i][j]=prev
     if Limite(i-1,j,grille)!=True:
         value=position(i-1,j,grille)
-        mv=Trigger(Liste_monstre,Gasper,Pintes,Index_pop)
+        mv=Trigger(lm,joueur,dp,Ip)
         if mv==1:
-            x1,y1,value1=Retour_recep(level)
+            x1,y1,value1=Retour_recep(n)
             grille[i-1][j]=value
             return x1,y1,value1
         elif mv==0 :
-            x1,y1,value1=Fou_depl(Index_room)
-            mv=Trigger(Liste_monstre,Gasper,Pintes,Index_pop)
+            x1,y1,value1=Fou_depl(i-1,j,grille,prev,Ir)
+            mv=Trigger(lm,joueur,dp,Ip)
             grille[i-1][j]=value
             return x1,y1,value1
         else :
@@ -213,19 +209,19 @@ def haut(i,j,prev,grille):
         print ("Mouvement impossible")
         return i,j,value
 
-def bas(i,j,prev,grille):
+def bas(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     """ déplace Gasper d'une case vers le bas"""
     grille[i][j]=prev
     if Limite(i+1,j,grille)!=True:
         value=position(i+1,j,grille)
-        mv=Trigger(Liste_monstre,Gasper,Pintes,Index_pop)
+        mv=Trigger(lm,joueur,dp,Ip)
         if mv==1:
-            x1,y1,value1=Retour_recep(level)
+            x1,y1,value1=Retour_recep(n)
             grille[i+1][j]=value
             return x1,y1,value1
         elif mv==0 :
-            x1,y1,value1=Fou_depl(Index_room)
-            mv=Trigger(Liste_monstre,Gasper,Pintes,Index_pop)
+            x1,y1,value1=Fou_depl(i+1,j,grille,value,Ir)
+            mv=Trigger(lm,joueur,dp,Ip)
             grille[i+1][j]=value
             return x1,y1,value1
         else :
@@ -236,6 +232,14 @@ def bas(i,j,prev,grille):
         return i,j,value
 
 # Fonctions relatives à la positions des ennemis:
+def choix_monstre(n):
+    if n==1:
+        choix={"Master" : {"abs": None, "ord": None},"Fou" :{"abs": None, "ord": None}, "Bibbendum1": {"abs": None, "ord": None},"Bibbendum2": {"abs": None, "ord": None}, "Bibbendum3": {"abs": None, "ord": None}}
+        return choix
+    if n==2: #Level2
+        choix={"Mastrer" : {"abs": None, "ord": None},"Fou": {"abs": None, "ord": None},"Bibbendum1": {"abs": None, "ord": None}, "Gobelin" : {"abs": None, "ord": None}}
+        return choix
+
 def Is_monstre(Ip,x):
     """vérifie s il y a déjà un monstre dans la piece, x étant la valeur envoyée par la fonction random"""
     flag = 0
@@ -315,11 +319,12 @@ def Fou_take_pinte(joueur):
     joueur["pinte"] = joueur["pinte"] - 1 #modifie la valeur dans le dict Gasper
     print "Gasper perd une pinte d'ectoplasme, il lui reste %d pinte(s) d'energie"%(joueur["pinte"])
 
-def Fou_depl(Index_room):
+def Fou_depl(i,j,grille,prev,Ir):
     """pouvoir du Fou qui modifie de manière aléatoire la position de Gasper"""
-    i = random.randint(0,11)
-    x = Index_room[i][0]
-    y = Index_room[i][1]
+    r = random.randint(0,11)
+    x = Ir[r][0]
+    y = Ir[r][1]
+    grille[i][j]=prev
     value=position(x,y,Plateau)
     return x,y,value
 
@@ -331,7 +336,7 @@ def Bib_take_pinte(joueur):
     print "Gasper paralysé perd deux pintes d'ectoplasme, il lui reste %d pinte(s) d'ectoplasme"%(joueur["pinte"])
 
 #Gobelin
-def Gobelin_skill(joueur, Ip, lm):
+def Gobelin_skill(joueur, Ip, lm,Ir):
     """Le gobelin vole 1 pinte a Gasper et se téléporte dans une autre pièce
     attention, le gobelin doit etre placer à la dernière positon de la Liste_monstre"""
     joueur["pinte"] = joueur["pinte"] - 2
@@ -340,10 +345,8 @@ def Gobelin_skill(joueur, Ip, lm):
     while Is_monstre(Ip,x) == True : #vérifie si l'indice est attribué à un autre monstre , si c est le cas relance random.randit
         x = random.randint(0,11)
     Ip[3]= x # modifie le nouvel intice attribué au gobelin
-    lm["Gobelin"]["ord"] = Index_room[x][0] # modifie l'abs du Gobelin grace a l Index_room
-    lm["Gobelin"]["abs"] = Index_room[x][1] # modifie l ord du Gobelin grace a l Index_room
-    print lm["Gobelin"]["ord"],lm["Gobelin"]["abs"]
-
+    lm["Gobelin"]["ord"] = Ir[x][0] # modifie l'abs du Gobelin grace a l Index_room
+    lm["Gobelin"]["abs"] = Ir[x][1] # modifie l ord du Gobelin grace a l Index_room
 
 #Trigger à poser apres chaque deplacement:
 def Trigger(lm,joueur,D,Ip):
@@ -370,7 +373,6 @@ def Trigger(lm,joueur,D,Ip):
                 print ("Gasper entend un petit ricanement")
             elif (Monstre == "Bibbendum1" or Monstre == "Bibbendum2" or Monstre == "Bibbendum3"):
                 print("Gasper sent une odeur alléchante de chamallow à la fraise")
-
         else :
             mv=2
     for k in D.keys():
@@ -384,7 +386,6 @@ def Trigger(lm,joueur,D,Ip):
 
 #Main
 
-
 if __name__ == '__main__':
 
 #Intitialisation:
@@ -392,14 +393,8 @@ if __name__ == '__main__':
 #Plateau de jeu
     level=1
     Index_pop = [] # contient des indices x générés alétoirement => Index_room[x] = coordonnees de la salle dans lequelle il y a le monstre qui a obtenue l'indice X
-    Index_room = Salle(level) #liste des salle du chateau Index_room[4,0] = reception , Index_room[10,8]=paradis
+    Index_room = Salle(level) #liste des salle du chateau 
     Gasper = {"abs" : 0, "ord" : 0, "pinte" : 3}
-    Master = {"abs" : None, "ord" : None}
-    Fou = {"abs": None, "ord": None}
-    Bibbendum1 = {"abs": None, "ord": None}
-    Bibbendum2 = {"abs": None, "ord": None}
-    Bibbendum3 = {"abs": None, "ord": None}
-    Gobelin = {"abs": None, "ord": None}
     Pintes={}
     Liste_monstre = choix_monstre(level)
     Plateau=[]
@@ -410,20 +405,19 @@ if __name__ == '__main__':
     Pop_pinte(Pintes)
     Pop_monstre(Pintes,Liste_monstre,Index_pop,Index_room)
     while True:
-        print x,y
         answer=menu(Plateau)
         os.system("clear")
         if answer==6:
             os.system("clear")
-            x,y,value=droite(x,y,value,Plateau)
+            x,y,value=droite(x,y,value,Plateau,Liste_monstre,Gasper,Pintes,Index_pop,level,Index_room)
         elif answer==4:
             os.system("clear")
-            x,y,value=gauche(x,y,value,Plateau)
+            x,y,value=gauche(x,y,value,Plateau,Liste_monstre,Gasper,Pintes,Index_pop,level,Index_room)
         elif answer==8:
             os.system("clear")
-            x,y,value=haut(x,y,value,Plateau)
+            x,y,value=haut(x,y,value,Plateau,Liste_monstre,Gasper,Pintes,Index_pop,level,Index_room)
         elif answer==2:
             os.system("clear")
-            x,y,value=bas(x,y,value,Plateau)
+            x,y,value=bas(x,y,value,Plateau,Liste_monstre,Gasper,Pintes,Index_pop,level,Index_room)
         elif answer==0:
             sys.exit()

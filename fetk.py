@@ -1,60 +1,63 @@
 # -*-coding:utf-8 -*
-"""ce programme est un jeu, où l'utilisateur déplace un fantôme appelé Gasper.
+#Python 2.7
+#Jeu Escape Game 
+#Jéremy BULLE et Domitille COQ--ETCHEGARAY
+#Master 1 Bio-Informatique 2018-2019
+
+"""Ce programme est un jeu, où l'utilisateur déplace un fantôme appelé Gasper.
 Le but du jeu est de rejoindre le paradis en traversant le chateau tout en évitant
 les monstres. Gasper doit toujours avoir au moins une pinte dans son inventaire,
 si ce n'est pas la cas, c'est Game Over."""
+
 #Importation des modules
 from Tkinter import *
 from tkMessageBox import *
 import random
 import os
 
-def restart_programme():
+def restart_program():
     """Relance le programme en cours"""
     python = sys.executable
     os.execl(python, python, * sys.argv)
 
 def BuildCastle(n):
     """ Construction des éléments du chateau """
-    if n==2:
-        grille=[[" "," "," "," "," "," "," "," "," "," ","R"," "," "],[0,"*","*","*","*","*",0,"*","*"," ","*"," "," "],
-        ["*"," "," "," ","*"," "," "," ",0,"*","*"," "," "],["*","*",0,"*","*","*",0," "," "," ","*"," "," "],
-        [0," ","*"," "," "," ","*"," "," "," ",0," "," "],["*"," ","*"," "," "," ","*"," "," "," ","*"," "," "],
-        ["*"," ","P"," "," "," ",0,"*","*","*","*"," "," "],["*"," ","*"," "," "," ","*"," "," "," ","*"," "," "],
-        [0,"*",00,"*",0,"*","*","*","*","*",0," "," "]]
-        return grille
-    elif n==1:
+    if n==1:
         grille=[[" "," ","*","*","*","*","*"," "," "," ","E"," "," "],[" "," ","*"," "," "," ","*"," "," "," ","*"," "," "],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],["*"," ","*"," "," "," ","*"," "," "," ","*"," ","*"],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],["*"," ","*"," "," "," ","*"," "," "," ","*"," ","*"],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],[" "," ","*"," "," "," ","*"," "," "," "," "," "," "],
         [" "," ","*","*","R","*","*"," "," "," "," "," "," "]]
         return grille
+    elif n==2:
+        grille=[[" "," "," "," "," "," "," "," "," "," ","R"," "," "],[0,"*","*","*","*","*",0,"*","*"," ","*"," "," "],
+        ["*"," "," "," ","*"," "," "," ",0,"*","*"," "," "],["*","*",0,"*","*","*",0," "," "," ","*"," "," "],
+        [0," ","*"," "," "," ","*"," "," "," ",0," "," "],["*"," ","*"," "," "," ","*"," "," "," ","*"," "," "],
+        ["*"," ","P"," "," "," ",0,"*","*","*","*"," "," "],["*"," ","*"," "," "," ","*"," "," "," ","*"," "," "],
+        [0,"*",0,"*",0,"*","*","*","*","*",0," "," "]]
+        return grille
 
 def Salle(n):
-    if n==2:
+    if n==1:
+        salle=[[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]]
+        return salle  
+    elif n==2:
         salle=[[8,0],[4,0],[1,0],[3,2],[8,2],[8,4],[1,6],[3,6],[6,6],[2,8],[4,10],[8,10]]
         return salle
-    elif n==1:
-        salle=[[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]]
-        return salle
-    
+   
 def choix_monstre(n):
     if n==1:
         choix={"Master" : {"abs": None, "ord": None},"Fou" :{"abs": None, "ord": None}, "Bibbendum1": {"abs": None, "ord": None},"Bibbendum2": {"abs": None, "ord": None}, "Bibbendum3": {"abs": None, "ord": None}}
         return choix
     if n==2:
         choix={"Mastrer" : {"abs": None, "ord": None},"Fou": {"abs": None, "ord": None},"Bibbendum1": {"abs": None, "ord": None}, "Gobelin" : {"abs": None, "ord": None}}
-        return choix
-        
+        return choix      
 
 def Chateautk(w,grille):
     size=len(grille)
     size2=len(grille[0])
-    n=0
     for i in range(size):
         for j in range(size2):
-            n=n+1
             if grille[i][j]=="P" or grille[i][j]==0 or grille[i][j]=="R" or grille[i][j]=="E":
                 Canvas(w,width=50,height=50,bg="Lightsteelblue3").grid(row=i,column=j)
             elif grille[i][j]=="*":
@@ -69,7 +72,7 @@ def Chateautk(w,grille):
                 label=Label(image=img)
                 label.image=img
                 
-#Gaser et ses mouvements
+#Gasper et ses mouvements
 
 def position(i,j,grille):
     """ Position de Gasper """ 
@@ -93,7 +96,7 @@ def position(i,j,grille):
             showinfo("Gasper","Gasper rejoint le paradis des fantômes")
             f.quit()
         elif result=="yes":
-            restart_programme()
+            restart_program()
     elif value=="E":
         grille[i][j]="&"
         Chateautk(frame,grille)
@@ -114,7 +117,7 @@ def position(i,j,grille):
         if result=="no":
             f.quit()
         elif result=="yes":
-            restart_programme()
+            restart_program()
     else :
         grille[i][j]="&"
         Chateautk(frame,grille)
@@ -124,6 +127,7 @@ def position(i,j,grille):
 def Limite(x,y,grille):
     size=len(grille)
     size1=len(grille[0])
+    # Limite de la matrice 
     if x>size-1 :
         return True
     elif y>size1-1:
@@ -132,10 +136,11 @@ def Limite(x,y,grille):
         return True
     elif y==-1:
         return True
+    # Si jamais la valeur temporaire est " " Gasper rencontre un mur et ne peut pas passer
     elif grille[x][y]==" ":
         return True
   
-def droite(i,j,prev,grille):
+def droite(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     global x
     global y
     global value
@@ -143,12 +148,12 @@ def droite(i,j,prev,grille):
     grille[i][j]=prev
     if Limite(i,j+1,grille)!=True:
         position(i,j+1,grille)
-        Trigger(Gasper,Index_pop,Liste_monstre,Pintes)
+        Trigger(joueur,Ip,lm,dp,Ir)
         if mv==1:
             Retour_recep(i,j+1,value)
         elif mv==0 :
-            Fou_depl(i,j+1,value,Index_room)
-            Trigger(Gasper,Index_pop,Liste_monstre,Pintes)
+            Fou_depl(i,j+1,value,Ir)
+            Trigger(joueur,Ip,lm,dp,Ir)
         else :
             x=i
             y=j+1
@@ -158,7 +163,7 @@ def droite(i,j,prev,grille):
         x=i
         y=j
         
-def gauche(i,j,prev,grille):
+def gauche(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     global x
     global y
     global value
@@ -166,12 +171,12 @@ def gauche(i,j,prev,grille):
     grille[i][j]=prev
     if Limite(i,j-1,grille)!=True:
         position(i,j-1,grille)
-        Trigger(Gasper,Index_pop,Liste_monstre,Pintes)
+        Trigger(joueur,Ip,lm,dp,Ir)
         if mv==1:
             Retour_recep(i,j-1,value)
         elif mv==0 :
             Fou_depl(i,j-1,value,Index_room)
-            Trigger(Gasper,Index_pop,Liste_monstre,Pintes)
+            Trigger(joueur,Ip,lm,dp,Ir)
         else :
             x=i
             y=j-1
@@ -182,7 +187,7 @@ def gauche(i,j,prev,grille):
         y=j
     
 
-def haut(i,j,prev,grille):
+def haut(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     global x
     global y
     global value
@@ -190,12 +195,12 @@ def haut(i,j,prev,grille):
     grille[i][j]=prev
     if Limite(i-1,j,grille)!=True:
         position(i-1,j,grille)
-        Trigger(Gasper,Index_pop,Liste_monstre,Pintes)
+        Trigger(joueur,Ip,lm,dp,Ir)
         if mv==1:
             Retour_recep(i-1,j,value)
         elif mv==0 :
-            Fou_depl(i-1,j,value,Index_room)
-            Trigger(Gasper,Index_pop,Liste_monstre,Pintes)
+            Fou_depl(i-1,j,value,Ir)
+            Trigger(joueur,Ip,lm,dp,Ir)
         else :
             x=i-1
             y=j
@@ -205,7 +210,7 @@ def haut(i,j,prev,grille):
         x=i
         y=j
     
-def bas(i,j,prev,grille):
+def bas(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     global x
     global y
     global value
@@ -213,12 +218,12 @@ def bas(i,j,prev,grille):
     grille[i][j]=prev
     if Limite(i+1,j,grille)!=True:
         position(i+1,j,grille)
-        Trigger(Gasper,Index_pop,Liste_monstre,Pintes)
+        Trigger(joueur,Ip,lm,dp,Ir)
         if mv==1:
             Retour_recep(i+1,j,value)
         elif mv==0 :
-            Fou_depl(i+1,j,value,Index_room)
-            Trigger(Gasper,Index_pop,Liste_monstre,Pintes)
+            Fou_depl(i+1,j,value,Ir)
+            Trigger(joueur,Ip,lm,dp,Ir)
         else :
             x=i+1
             y=j
@@ -230,10 +235,10 @@ def bas(i,j,prev,grille):
 
 #Positionnement des ennemis:
 
-def Is_monstre(Index_pop,x):
+def Is_monstre(Ip,x):
     """vérifie s il y a déjà un monstre dans la piece, x étant la valeur envoyée par la fonction random"""
     flag = 0
-    for i in Index_pop : #scan la liste Indice_pop pour voir si l indice aleatoire fournit par la fonction random.randit() n'a pas déjà été attribué à un autre monstre
+    for i in Ip : #scan la liste Indice_pop pour voir si l indice aleatoire fournit par la fonction random.randit() n'a pas déjà été attribué à un autre monstre
         if x == i :
             flag = flag + 1 #ajoute 1 a la valeur de flag si le indice existe déjà dans Index_pop
     if flag > 0 :
@@ -328,20 +333,20 @@ def Bib_take_pinte(joueur):
     showinfo("De la mousse envahit la piece","Gasper perd une pinte d'energie, il lui reste %d pintes d'energie"%(joueur["pinte"]))
 
 #Gobelin
-def Gobelin_skill(joueur, Ip, lm):
+def Gobelin_skill(joueur, Ip, lm,Ir):
     """Le gobelin vole 1 pinte a Gasper et se téléporte dans une autre pièce
     attention, le gobelin doit etre placer à la dernière positon de la Liste_monstre"""
     joueur["pinte"] = joueur["pinte"] - 2
-    showinfo("Mhrhrh", "Le gobelin dérobe une pinte d'ectoplasme à Gasper, il reste %d pinte(s) d'ectoplasme à Gasper"%(joueur["pinte"]))
+    showinfo("Arglglglglglgl", "Le gobelin dérobe une pinte d'ectoplasme à Gasper, il reste %d pinte(s) d'ectoplasme à Gasper"%(joueur["pinte"]))
     x = random.randint(0,11) # génère un indice aléatoire
     while Is_monstre(Ip,x) == True : #vérifie si l'indice est attribué à un autre monstre , si c est le cas relance random.randit
         x = random.randint(0,11)
     Ip[3]= x # modifie le nouvel intice attribué au gobelin
-    lm["Gobelin"]["ord"] = Index_room[x][0] # modifie l'abs du Gobelin grace a l Index_room
-    lm["Gobelin"]["abs"] = Index_room[x][1] # modifie l ord du Gobelin grace a l Index_room
+    lm["Gobelin"]["ord"] = Ir[x][0] # modifie l'abs du Gobelin grace a l Index_room
+    lm["Gobelin"]["abs"] = Ir[x][1] # modifie l ord du Gobelin grace a l Index_room
 
 #Trigger à lancer apres chaque deplacement, cela permet la gestion des évênements d'intéraction entre les monstres et Gasper:
-def Trigger(joueur,Ip,listm,dicP):
+def Trigger(joueur,Ip,listm,dicP,Ir):
     global mv
     for Monstre in listm.keys():
         if (listm[Monstre]["abs"]==joueur["abs"] and listm[Monstre]["ord"]==joueur["ord"]):
@@ -353,8 +358,8 @@ def Trigger(joueur,Ip,listm,dicP):
                 Fou_take_pinte(joueur)
                 return mv
             elif Monstre == "Gobelin" :
-                Gobelin_skill(joueur,Ip,listm)
-            elif (Monstre == Bibbendum1 or Monstre == Bibbendum2 or Monstre == Bibbendum3):
+                Gobelin_skill(joueur,Ip,listm,Ir)
+            elif (Monstre == "Bibbendum1" or Monstre == "Bibbendum2" or Monstre == "Bibbendum3"):
                 Bib_take_pinte(joueur)
         elif Is_one_case_range(Monstre,joueur,listm) == True :
             if Monstre == "Master" :
@@ -386,11 +391,6 @@ if __name__ == '__main__':
     Index_pop = [] # contient des indices x générés alétoirement => Index_room[x] = coordonnees de la salle dans lequelle il y a le monstre qui a obtenue l'indice X
     Index_room = Salle(level) #liste des salle du chateau 
     Gasper = {"abs" : 0, "ord" : 0, "pinte" : 3}
-    Master = {"abs" : None, "ord" : None}
-    Fou = {"abs": None, "ord": None}
-    Bibbendum1 = {"abs": None, "ord": None}
-    Bibbendum2 = {"abs": None, "ord": None}
-    Bibbendum3 = {"abs": None, "ord": None}
     Pintes={}
     Liste_monstre = choix_monstre(level)
 
@@ -412,10 +412,10 @@ if __name__ == '__main__':
     Pop_monstre(Pintes,Liste_monstre,Index_pop,Index_room)
 
 #Bouton deplacement
-    boutonl=Button(cadre,text="Gauche",command=lambda: gauche(x,y,value,Plateau))
-    boutonr=Button(cadre,text="Droite",command=lambda: droite(x,y,value,Plateau))
-    boutonu=Button(cadre,text="Haut",command=lambda: haut(x,y,value,Plateau))
-    boutond=Button(cadre,text="Bas",command=lambda: bas(x,y,value,Plateau))
+    boutonl=Button(cadre,text="Gauche",command=lambda: gauche(x,y,value,Plateau,Liste_monstre,Gasper,Pintes,Index_pop,level,Index_room))
+    boutonr=Button(cadre,text="Droite",command=lambda: droite(x,y,value,Plateau,Liste_monstre,Gasper,Pintes,Index_pop,level,Index_room))
+    boutonu=Button(cadre,text="Haut",command=lambda: haut(x,y,value,Plateau,Liste_monstre,Gasper,Pintes,Index_pop,level,Index_room))
+    boutond=Button(cadre,text="Bas",command=lambda: bas(x,y,value,Plateau,Liste_monstre,Gasper,Pintes,Index_pop,level,Index_room))
     boutonl.grid(row=1,column=1)
     boutonr.grid(row=1,column=2)
     boutonu.grid(row=1,column=3)
@@ -424,7 +424,7 @@ if __name__ == '__main__':
 #Bouton restart
     boutonq=Button(cadre,text="Quit",command=f.quit)
     boutonq.grid(row=2,column=4)
-    boutonres=Button(cadre,text="Restart",command=restart_programme)
+    boutonres=Button(cadre,text="Restart",command=restart_program)
     boutonres.grid(row=2,column=1)
 
     f.mainloop()
