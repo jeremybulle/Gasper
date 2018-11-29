@@ -1,4 +1,5 @@
 # -*-coding:utf-8 -*
+#!/usr/bin/python2.7
 
 """ce programme est un jeu, où l'utilisateur déplace un fantôme appelé Gasper.
 Le but du jeu est de rejoindre le paradis en traversant le chateau tout en évitant
