@@ -223,7 +223,7 @@ def Pop_pinte(dict_pinte):
     for i in range(len(Nb)):
         dict_pinte[i]={"abs":None,"ord":None,"nb":Nb[i]}
 
-def Pop_monstre(D,lm,Ip):
+def Pop_monstre(D,lm,Ip,Ir):
     """fonction qui attribue les coordonnées à tous les monstres"""
     Ip = [] #reset l indice de pop si on veut faire repop les monstres de maniere aleatoire(sans que l ancien pop influe)
     for M in lm:
@@ -231,15 +231,15 @@ def Pop_monstre(D,lm,Ip):
         while Is_monstre(Ip,x) == True : #vérifie si l'indice est attribué à un autre monstre , si c est le cas relance random.randit
             x = random.randint(0,11)
         Ip.append(x) # note l'attribution d'indice dans Index_pop
-        M["ord"] = Index_room[x][0] # modifie l'abs du monstre grace a l Index_room
-        M["abs"] = Index_room[x][1] # modifie l ord du monstre grace a l Index_room
+        M["ord"] = Ir[x][0] # modifie l'abs du monstre grace a l Index_room
+        M["abs"] = Ir[x][1] # modifie l ord du monstre grace a l Index_room
     for k in D.keys(): #Attribution des valeurs de salle aux pintes
         x = random.randint(0,11)
         while Is_monstre(Ip,x) == True :
             x = random.randint(0,11)
         Ip.append(x)
-        D[k]["ord"]=Index_room[x][0]
-        D[k]["abs"]=Index_room[x][1]
+        D[k]["ord"]=Ir[x][0]
+        D[k]["abs"]=Ir[x][1]
 
 def Is_one_case_range(Monstre,joueur):
     """focntion qui verifie s'il y a un monstre à une case de Gasper"""
@@ -337,7 +337,7 @@ if __name__ == '__main__':
     y=4
     value=position(x,y,Plateau)
     Pop_pinte(Pintes)
-    Pop_monstre(Pintes,Liste_monstre,Index_pop)
+    Pop_monstre(Pintes,Liste_monstre,Index_pop,Index_room)
     while True :
         answer=menu(Plateau)
         os.system("clear")
