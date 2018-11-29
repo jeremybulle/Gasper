@@ -101,16 +101,13 @@ def position(i,j,grille):
         print "Veuillez monter dans l'ascenseur"
         level=2
         Plateau=BuildCastle(level)
-        print Plateau
         Index_room=Salle(level)
-        print Index_room
         Liste_monstre=choix_monstre(level)
         x=0
         y=10
         value=position(x,y,Plateau)
         Pop_pinte(Pintes)
         Pop_monstre(Pintes,Liste_monstre,Index_room)
-        print Liste_monstre
         return value
     # Si Gasper n'a plus de pintes, il perd"
     elif Gasper["pinte"]<0 or Gasper["pinte"]==0:
