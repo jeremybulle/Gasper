@@ -16,14 +16,14 @@ def restart_programme():
 
 def BuildCastle(n):
     """ Construction du chateau """
-    if n==1:
+    if n==2:
         grille=[[" "," "," "," "," "," "," "," "," "," "," "," "," "],[0,"*","*",0,"*","*",0,"*","*",0,"*"," "," "],
         ["*"," "," "," "," "," "," "," "," "," ","*"," "," "],["*"," ",0,"*","*","*",0," "," "," ","*"," "," "],
         [0," ","*"," ","*"," ","*"," "," "," ",0," "," "],["*"," ","*"," ","P"," ","*"," "," "," ","*"," "," "],
         ["*"," ",0," "," "," ",0,"*","*","*","*"," "," "],["*"," ","*"," "," "," ","*"," "," "," ","R"," "," "],
         [0,"*","*","*",0,"*","*"," "," "," "," "," "," "]]
         return grille
-    elif n==2:
+    elif n==1:
         grille=[[" "," ","*","*","*","*","*"," "," "," ","P"," "," "],[" "," ","*"," "," "," ","*"," "," "," ","*"," "," "],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],["*"," ","*"," "," "," ","*"," "," "," ","*"," ","*"],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],["*"," ","*"," "," "," ","*"," "," "," ","*"," ","*"],
@@ -32,10 +32,10 @@ def BuildCastle(n):
         return grille
 
 def Salle(n):
-    if n==1:
+    if n==2:
         salle=[[8,0],[4,0],[1,0],[6,2],[3,2],[1,3],[8,4],[6,6],[3,6],[1,6],[1,9],[4,10]]
         return salle
-    elif n==2:
+    elif n==1:
         salle=[[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]]
         return salle
 
@@ -66,6 +66,10 @@ def position(i,j,grille):
     """ Position de Gasper """ 
     global value
     global n
+    global Index_room
+    global x
+    global y
+    global Plateau
     value=grille[i][j]
     Gasper["abs"]=j
     Gasper["ord"]=i
@@ -78,7 +82,12 @@ def position(i,j,grille):
             showinfo("Gasper","Gasper rejoint le paradis des fantômes")
             f.quit()
         elif result=="yes":
-            restart_programme()
+            Plateau=BuildCastle(2)
+            Index_room=Salle(2)
+            Chateautk(frame,Plateau)
+            x=7
+            y=10
+            position(x,y,Plateau)
             n=2
     elif Gasper["pinte"]<0 or Gasper["pinte"]==0:
         result=askquestion("RIP", "Oh non Gasper a diparu ! Veux-tu recommencer ?")
@@ -269,9 +278,9 @@ def Retour_recep (i,j,prev) :
     global value
     showinfo("Cher visiteur","Laissez-moi vous raccompagner à l'entrée de ma demeure")
     Plateau[i][j]=prev
-    position(8,10,Plateau)
+    position(8,4,Plateau)
     x=8
-    y=10
+    y=4
 
 #Savant fou :
 
@@ -361,8 +370,8 @@ if __name__ == '__main__':
     Plateau=BuildCastle(n)
     Chateautk(frame,Plateau)
     value=0
-    x=7
-    y=10
+    x=8
+    y=4
     position(x,y,Plateau)
     Pop_pinte(Pintes)
     Pop_monstre(Pintes,Liste_monstre,Index_pop,Index_room)

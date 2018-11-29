@@ -34,17 +34,17 @@ def menu(grille):
     except NameError : # si l'utilisateur entre une str au lieu d'un int
         pass
 
-def BuildCastle():
+def BuildCastle(n):
     """ Construction des éléments du chateau """
     if n==2:
-        grille=[[" "," "," "," "," "," "," "," "," "," "," "," "," "],[0,"*","*",0,"*","*",0,"*","*",0,"*"," "," "],
+        grille=[[" "," "," "," "," "," "," "," "," "," ","R"," "," "],[0,"*","*",0,"*","*",0,"*","*",0,"*"," "," "],
         ["*"," "," "," "," "," "," "," "," "," ","*"," "," "],["*"," ",0,"*","*","*",0," "," "," ","*"," "," "],
-        [0," ","*"," ","*"," ","*"," "," "," ",0," "," "],["*"," ","*"," ","P"," ","*"," "," "," ","*"," "," "],
-        ["*"," ",0," "," "," ",0,"*","*","*","*"," "," "],["*"," ","*"," "," "," ","*"," "," "," ","R"," "," "],
+        [0," ","*"," "," "," ","*"," "," "," ",0," "," "],["*"," ","P"," "," "," ","*"," "," "," ","*"," "," "],
+        ["*"," ","*"," "," "," ",0,"*","*","*","*"," "," "],["*"," ","*"," "," "," ","*"," "," "," "," "," "," "],
         [0,"*","*","*",0,"*","*"," "," "," "," "," "," "]]
         return grille
     elif n==1:
-        grille=[[" "," ","*","*","*","*","*"," "," "," ","P"," "," "],[" "," ","*"," "," "," ","*"," "," "," ","*"," "," "],
+        grille=[[" "," ","*","*","*","*","*"," "," "," ","E"," "," "],[" "," ","*"," "," "," ","*"," "," "," ","*"," "," "],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],["*"," ","*"," "," "," ","*"," "," "," ","*"," ","*"],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],["*"," ","*"," "," "," ","*"," "," "," ","*"," ","*"],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],[" "," ","*"," "," "," ","*"," "," "," "," "," "," "],
@@ -59,7 +59,15 @@ def Salle(n):
     elif n==1:
         salle=[[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]]
         return salle
-
+    
+def choix_monstre(n):
+    if n==1:
+        choix=[Master,Fou,Bibbendum1,Bibbendum2,Bibbendum3]
+        return choix
+    if n==2:
+        choix=[Master,Fou,Bibbendum1]
+        return choix
+        
 def afficher(grille):
     """Affichage du chateau sur le terminal"""
     size=len(grille)
@@ -72,6 +80,9 @@ def afficher(grille):
 
 def position(i,j,grille):
     """ Position de Gasper et conditions de fin de jeu """
+    global Plateau
+    global Index_room
+    global n
     value=grille[i][j]
     Gasper["abs"]=j
     Gasper["ord"]=i
@@ -85,8 +96,22 @@ def position(i,j,grille):
         if flag == 1 :
             sys.exit()
         if flag == 2 :
-            os.system("clear")
             restart_program()
+    elif value=="E":
+        print "Veuillez monter dans l'ascenseur"
+        level=2
+        Plateau=BuildCastle(level)
+        print Plateau
+        Index_room=Salle(level)
+        print Index_room
+        Liste_monstre=choix_monstre(level)
+        x=0
+        y=10
+        value=position(x,y,Plateau)
+        Pop_pinte(Pintes)
+        Pop_monstre(Pintes,Liste_monstre)
+        print Liste_monstre
+        return value
     # Si Gasper n'a plus de pintes, il perd"
     elif Gasper["pinte"]<0 or Gasper["pinte"]==0:
         print "Gasper ne peut plus se déplacer sans énergie..."
@@ -126,7 +151,7 @@ def droite(i,j,prev,grille):
         value=position(i,j+1,grille)
         mv=Trigger(Liste_monstre,Gasper,Pintes)
         if mv==1:
-            x1,y1,value1=Retour_recep()
+            x1,y1,value1=Retour_recep(n)
             grille[i][j+1]=value
             return x1,y1,value1
         elif mv==0 :
@@ -148,7 +173,7 @@ def gauche(i,j,prev,grille):
         value=position(i,j-1,grille)
         mv=Trigger(Liste_monstre,Gasper,Pintes)
         if mv==1:
-            x1,y1,value1=Retour_recep()
+            x1,y1,value1=Retour_recep(n)
             grille[i][j-1]=value
             return x1,y1,value1
         elif mv==0 :
@@ -170,7 +195,7 @@ def haut(i,j,prev,grille):
         value=position(i-1,j,grille)
         mv=Trigger(Liste_monstre,Gasper,Pintes)
         if mv==1:
-            x1,y1,value1=Retour_recep()
+            x1,y1,value1=Retour_recep(n)
             grille[i-1][j]=value
             return x1,y1,value1
         elif mv==0 :
@@ -192,7 +217,7 @@ def bas(i,j,prev,grille):
         value=position(i+1,j,grille)
         mv=Trigger(Liste_monstre,Gasper,Pintes)
         if mv==1:
-            x1,y1,value1=Retour_recep()
+            x1,y1,value1=Retour_recep(n)
             grille[i+1][j]=value
             return x1,y1,value1
         elif mv==0 :
@@ -269,11 +294,15 @@ def Is_one_case_range(Monstre,joueur):
 
 #Maitre du chateau
 
-def Retour_recep () :
+def Retour_recep (n) :
     """modifie les coordonnées de Gasper ce qui le place à la réception"""
-    value=position(8,4,Plateau)
-    x=8
-    y=4
+    if n==1:
+        x=8
+        y=4
+    elif n==2:
+        x=0
+        y=10
+    value=position(x,y,Plateau)
     return x,y,value
 
 #Savant fou :
@@ -338,9 +367,9 @@ if __name__ == '__main__':
 #Intitialisation:
 
 #Plateau de jeu
-    n=1
+    level=1
     Index_pop = [] # contient des indices x générés alétoirement => Index_room[x] = coordonnees de la salle dans lequelle il y a le monstre qui a obtenue l'indice X
-    Index_room = Salle(n) #liste des salle du chateau Index_room[4,0] = reception , Index_room[10,8]=paradis
+    Index_room = Salle(level) #liste des salle du chateau Index_room[4,0] = reception , Index_room[10,8]=paradis
     Gasper = {"abs" : 0, "ord" : 0, "pinte" : 3}
     Master = {"abs" : None, "ord" : None}
     Fou = {"abs": None, "ord": None}
@@ -348,15 +377,16 @@ if __name__ == '__main__':
     Bibbendum2 = {"abs": None, "ord": None}
     Bibbendum3 = {"abs": None, "ord": None}
     Pintes={}
-    Liste_monstre = [Master,Fou,Bibbendum1,Bibbendum2,Bibbendum3]
+    Liste_monstre = choix_monstre(level)
     Plateau=[]
-    Plateau=BuildCastle(n)
+    Plateau=BuildCastle(level)
     x=8
     y=4
     value=position(x,y,Plateau)
     Pop_pinte(Pintes)
     Pop_monstre(Pintes,Liste_monstre,Index_pop)
-    while True :
+    while True:
+        print x,y
         answer=menu(Plateau)
         os.system("clear")
         if answer==6:
