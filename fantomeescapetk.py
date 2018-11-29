@@ -94,9 +94,9 @@ def droite(i,j,prev,grille):
         position(i,j+1,grille)
         Trigger(Gasper,Liste_monstre,Pintes)
         if mv==1:
-            Retour_recep(i,j+1,prev)
+            Retour_recep(i,j+1,value)
         elif mv==0 :
-            Fou_depl(i,j+1,prev,Index_room)
+            Fou_depl(i,j+1,value,Index_room)
             Trigger(Gasper,Liste_monstre,Pintes)
         else :
             x=i
@@ -117,9 +117,9 @@ def gauche(i,j,prev,grille):
         position(i,j-1,grille)
         Trigger(Gasper,Liste_monstre,Pintes)
         if mv==1:
-            Retour_recep(i,j-1,prev)
+            Retour_recep(i,j-1,value)
         elif mv==0 :
-            Fou_depl(i,j-1,prev,Index_room)
+            Fou_depl(i,j-1,value,Index_room)
             Trigger(Gasper,Liste_monstre,Pintes)
         else :
             x=i
@@ -141,9 +141,9 @@ def haut(i,j,prev,grille):
         position(i-1,j,grille)
         Trigger(Gasper,Liste_monstre,Pintes)
         if mv==1:
-            Retour_recep(i-1,j,prev)
+            Retour_recep(i-1,j,value)
         elif mv==0 :
-            Fou_depl(i-1,j,prev,Index_room)
+            Fou_depl(i-1,j,value,Index_room)
             Trigger(Gasper,Liste_monstre,Pintes)
         else :
             x=i-1
