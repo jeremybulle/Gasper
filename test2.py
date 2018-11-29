@@ -19,6 +19,8 @@ def restart_program():
 
 def menu(grille):
     """affichage de l'interface avec l'utilisateur"""
+    print Index_pop
+    print Index_room
     afficher(grille)
     print ("Gasper possède {0} pinte(s)".format(Gasper["pinte"]))
     print ( "6- Droite")
@@ -39,9 +41,9 @@ def BuildCastle(n):
     if n==2:
         grille=[[" "," "," "," "," "," "," "," "," "," ","R"," "," "],[0,"*","*","*","*","*",0,"*","*"," ","*"," "," "],
         ["*"," "," "," ","*"," "," "," ",0,"*","*"," "," "],["*","*",0,"*","*","*",0," "," "," ","*"," "," "],
-        [0," ","*"," "," "," ","*"," "," "," ",0," "," "],["*"," ","P"," "," "," ","*"," "," "," ","*"," "," "],
-        ["*"," ","*"," "," "," ",0,"*","*","*","*"," "," "],["*"," ","*"," "," "," ","*"," "," "," ","*"," "," "],
-        [0,"*","*","*",0,"*","*","*","*","*",0," "," "]]
+        [0," ","*"," "," "," ","*"," "," "," ",0," "," "],["*"," ","*"," "," "," ","*"," "," "," ","*"," "," "],
+        ["*"," ","P"," "," "," ",0,"*","*","*","*"," "," "],["*"," ","*"," "," "," ","*"," "," "," ","*"," "," "],
+        [0,"*",00,"*",0,"*","*","*","*","*",0," "," "]]
         return grille
     elif n==1:
         grille=[[" "," ","*","*","*","*","*"," "," "," ","E"," "," "],[" "," ","*"," "," "," ","*"," "," "," ","*"," "," "],
@@ -54,20 +56,20 @@ def BuildCastle(n):
 
 def Salle(n):
     if n==2:
-        salle=[[8,0],[4,0],[1,0],[2,8],[3,2],[1,3],[8,4],[6,6],[3,6],[1,6],[8,10],[4,10]]
+        salle=[[8,0],[4,0],[1,0],[3,2],[8,2],[8,4],[1,6],[3,6],[6,6],[2,8],[4,10],[8,10]]
         return salle
     elif n==1:
         salle=[[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]]
         return salle
-    
+
 def choix_monstre(n):
     if n==1:
         choix=[Master,Fou,Bibbendum1,Bibbendum2,Bibbendum3]
         return choix
     if n==2:
-        choix=[Master,Fou,Bibbendum1]
+        choix=[Master,Fou,Bibbendum1,Gobelin]
         return choix
-        
+
 def afficher(grille):
     """Affichage du chateau sur le terminal"""
     size=len(grille)
@@ -82,7 +84,8 @@ def position(i,j,grille):
     """ Position de Gasper et conditions de fin de jeu """
     global Plateau
     global Index_room
-    global n
+    global Index_pop
+    global level
     value=grille[i][j]
     Gasper["abs"]=j
     Gasper["ord"]=i
@@ -106,8 +109,9 @@ def position(i,j,grille):
         x=0
         y=10
         value=position(x,y,Plateau)
+        Index_pop = []
         Pop_pinte(Pintes)
-        Pop_monstre(Pintes,Liste_monstre,Index_room)
+        Pop_monstre(Pintes,Liste_monstre,Index_pop)
         return value
     # Si Gasper n'a plus de pintes, il perd"
     elif Gasper["pinte"]<0 or Gasper["pinte"]==0:
@@ -240,12 +244,12 @@ def Is_monstre(Ip,x):
         return True #indice déjà attribué à un monstre
     else :
         return False #indice pas utilisé pour un autre monstre, il est utilisable pour un nouveau monstre
-    
+
 def Pop_pinte(dict_pinte):
     """Créer le nb de Pintes qui apparaissent dans le Château inférieur à 5 pintes dans tous le château """
     Pintet=0 #Nb total de pintes dans le chateau
     Nb=[] #Liste permettant de conserver les combinaisons possibles
-    while(Pintet<5): #Nous devons avoir que 5 pintes 
+    while(Pintet<5): #Nous devons avoir que 5 pintes
         if Pintet==3:
             x=random.randint(1,2)
             Pintet=Pintet+x
@@ -264,7 +268,7 @@ def Pop_pinte(dict_pinte):
 
 def Pop_monstre(D,lm,Ip):
     """fonction qui attribue les coordonnées à tous les monstres"""
-    Ip = [] #reset l indice de pop si on veut faire repop les monstres de maniere aleatoire(sans que l ancien pop influe)
+    #Ip = [] #reset l indice de pop si on veut faire repop les monstres de maniere aleatoire(sans que l ancien pop influe)
     for M in lm:
         x = random.randint(0,11) # génère un indice aléatoire
         while Is_monstre(Ip,x) == True : #vérifie si l'indice est attribué à un autre monstre , si c est le cas relance random.randit
@@ -324,6 +328,21 @@ def Bib_take_pinte(joueur):
     joueur["pinte"] = joueur["pinte"] - 2
     print "Gasper paralysé perd deux pintes d'ectoplasme, il lui reste %d pinte(s) d'ectoplasme"%(joueur["pinte"])
 
+#Gobelin
+def Gobelin_skill(joueur, Ip):
+    """Le gobelin vole 1 pinte a Gasper et se téléporte dans une autre pièce
+    attention, le gobelin doit etre placer à la dernière positon de la Liste_monstre"""
+    joueur["pinte"] = joueur["pinte"] - 2
+    print "Le gobelin dérobe une pinte d'ectoplasme à Gasper, il reste %d pinte(s) d'ectoplasme à Gasper"%(joueur["pinte"])
+    x = random.randint(0,11) # génère un indice aléatoire
+    while Is_monstre(Ip,x) == True : #vérifie si l'indice est attribué à un autre monstre , si c est le cas relance random.randit
+        x = random.randint(0,11)
+    Ip[3]= x # modifie le nouvel intice attribué au gobelin
+    Gobelin["ord"] = Index_room[x][0] # modifie l'abs du Gobelin grace a l Index_room
+    Gobelin["abs"] = Index_room[x][1] # modifie l ord du Gobelin grace a l Index_room
+
+
+
 #Trigger à poser apres chaque deplacement:
 def Trigger(lm,joueur,D):
     for Monstre in lm:
@@ -338,6 +357,8 @@ def Trigger(lm,joueur,D):
                 Trigger(joueur)
             elif (Monstre == Bibbendum1 or Monstre == Bibbendum2 or Monstre == Bibbendum3):
                 Bib_take_pinte(joueur)
+            elif Monstre == Gobelin :
+                Gobelin_skill(joueur,Ip)
         elif Is_one_case_range(Monstre,joueur) == True : #Si la position de Gasper -1 de la position des monstres
             if Monstre == Master :
                 print("Gasper entend un bruit de clé")
@@ -345,6 +366,8 @@ def Trigger(lm,joueur,D):
                 print("Gasper entend un rire sardonique")
             elif (Monstre == Bibbendum1 or Monstre == Bibbendum2 or Monstre == Bibbendum3):
                 print("Gasper sent une odeur alléchante de chamallow à la fraise")
+            elif Monstre == Gobelin :
+                print ("Gasper entend un petit ricanement")
         else :
             mv=2
     for k in D.keys():
@@ -360,7 +383,7 @@ def Trigger(lm,joueur,D):
 
 
 if __name__ == '__main__':
-    
+
 #Intitialisation:
 
 #Plateau de jeu
@@ -373,6 +396,7 @@ if __name__ == '__main__':
     Bibbendum1 = {"abs": None, "ord": None}
     Bibbendum2 = {"abs": None, "ord": None}
     Bibbendum3 = {"abs": None, "ord": None}
+    Gobelin = {"abs": None, "ord": None}
     Pintes={}
     Liste_monstre = choix_monstre(level)
     Plateau=[]
