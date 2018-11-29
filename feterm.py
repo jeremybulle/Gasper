@@ -1,13 +1,10 @@
 # -*-coding:utf-8 -*
 #!/usr/bin/python2.7
-<<<<<<< HEAD
-#!/usr/bin/python2.7
-=======
+
 #Python 2.7
 #Jeu Escape Game
 #Jéremy BULLE et Domitille COQ--ETCHEGARAY
 #Master 1 Bio-Informatique 2018-2019
->>>>>>> 13bd7d1e2c09ad15c40cc6960095ec04434365ca
 
 """Ce programme est un jeu, où l'utilisateur déplace un fantôme appelé Gasper.
 Le but du jeu est de rejoindre le paradis en traversant le chateau tout en évitant
@@ -153,7 +150,7 @@ def droite(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     grille[i][j]=prev
     if Limite(i,j+1,grille)!=True:
         value=position(i,j+1,grille)
-        mv=Trigger(lm,joueur,dp,Ip)
+        mv=Trigger(lm,joueur,dp,Ip,Ir)
         if mv==1:
             x1,y1,value1=Retour_recep(n)
             grille[i][j+1]=value
@@ -161,7 +158,7 @@ def droite(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         elif mv==0 :
             x1,y1,value1=Fou_depl(i,j+1,grille,value,Ir)
             grille[i][j+1]=value
-            mv=Trigger(lm,joueur,dp,Ip)
+            mv=Trigger(lm,joueur,dp,Ip,Ir)
             return x1,y1,value1
         else :
             return i,j+1,value
@@ -175,7 +172,7 @@ def gauche(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     grille[i][j]=prev
     if Limite(i,j-1,grille)!=True:
         value=position(i,j-1,grille)
-        mv=Trigger(lm,joueur,dp,Ip)
+        mv=Trigger(lm,joueur,dp,Ip,Ir)
         if mv==1:
             x1,y1,value1=Retour_recep(n)
             grille[i][j-1]=value
@@ -183,7 +180,7 @@ def gauche(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         elif mv==0 :
             x1,y1,value1=Fou_depl(i,j-1,grille,value,Ir)
             grille[i][j+1]=value
-            mv=Trigger(lm,joueur,dp,Ip)
+            mv=Trigger(lm,joueur,dp,Ip,Ir)
             return x1,y1,value1
         else :
             return i,j-1,value
@@ -197,14 +194,14 @@ def haut(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     grille[i][j]=prev
     if Limite(i-1,j,grille)!=True:
         value=position(i-1,j,grille)
-        mv=Trigger(lm,joueur,dp,Ip)
+        mv=Trigger(lm,joueur,dp,Ip,Ir)
         if mv==1:
             x1,y1,value1=Retour_recep(n)
             grille[i-1][j]=value
             return x1,y1,value1
         elif mv==0 :
             x1,y1,value1=Fou_depl(i-1,j,grille,prev,Ir)
-            mv=Trigger(lm,joueur,dp,Ip)
+            mv=Trigger(lm,joueur,dp,Ip,Ir)
             grille[i-1][j]=value
             return x1,y1,value1
         else :
@@ -219,14 +216,14 @@ def bas(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     grille[i][j]=prev
     if Limite(i+1,j,grille)!=True:
         value=position(i+1,j,grille)
-        mv=Trigger(lm,joueur,dp,Ip)
+        mv=Trigger(lm,joueur,dp,Ip,Ir)
         if mv==1:
             x1,y1,value1=Retour_recep(n)
             grille[i+1][j]=value
             return x1,y1,value1
         elif mv==0 :
             x1,y1,value1=Fou_depl(i+1,j,grille,value,Ir)
-            mv=Trigger(lm,joueur,dp,Ip)
+            mv=Trigger(lm,joueur,dp,Ip,Ir)
             grille[i+1][j]=value
             return x1,y1,value1
         else :
@@ -354,7 +351,7 @@ def Gobelin_skill(joueur, Ip, lm,Ir):
     lm["Gobelin"]["abs"] = Ir[x][1] # modifie l ord du Gobelin grace a l Index_room
 
 #Trigger à poser apres chaque deplacement:
-def Trigger(lm,joueur,D,Ip):
+def Trigger(lm,joueur,D,Ip,Ir):
     for Monstre in lm.keys():
         if (lm[Monstre]["abs"]==joueur["abs"] and lm[Monstre]["ord"]==joueur["ord"]): #Si les positions sont identiques
             if Monstre == "Master":
@@ -366,7 +363,7 @@ def Trigger(lm,joueur,D,Ip):
                 return mv
                 Trigger(joueur)
             elif Monstre == "Gobelin" :
-                Gobelin_skill(joueur,Ip,lm)
+                Gobelin_skill(joueur,Ip,lm,Ir)
             elif (Monstre == "Bibbendum1" or Monstre == "Bibbendum2" or Monstre == "Bibbendum3"):
                 Bib_take_pinte(joueur)
         elif Is_one_case_range(Monstre,joueur,lm)== True : #Si la position de Gasper -1 de la position des monstres
