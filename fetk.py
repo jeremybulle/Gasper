@@ -50,7 +50,7 @@ def choix_monstre(n):
         choix={"Master" : {"abs": None, "ord": None},"Fou" :{"abs": None, "ord": None}, "Bibbendum1": {"abs": None, "ord": None},"Bibbendum2": {"abs": None, "ord": None}, "Bibbendum3": {"abs": None, "ord": None}}
         return choix
     if n==2:
-        choix={"Mastrer" : {"abs": None, "ord": None},"Fou": {"abs": None, "ord": None},"Bibbendum1": {"abs": None, "ord": None}, "Gobelin" : {"abs": None, "ord": None}}
+        choix={"Master" : {"abs": None, "ord": None},"Fou": {"abs": None, "ord": None},"Bibbendum1": {"abs": None, "ord": None}, "Gobelin" : {"abs": None, "ord": None}}
         return choix      
 
 def Chateautk(w,grille):
