@@ -157,7 +157,6 @@ def droite(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
             return x1,y1,value1
         elif mv==0 :
             x1,y1,value1=Fou_depl(i,j+1,grille,value,Ir)
-            grille[i][j+1]=value
             mv=Trigger(lm,joueur,dp,Ip,Ir)
             return x1,y1,value1
         else :
@@ -179,7 +178,6 @@ def gauche(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
             return x1,y1,value1
         elif mv==0 :
             x1,y1,value1=Fou_depl(i,j-1,grille,value,Ir)
-            grille[i][j+1]=value
             mv=Trigger(lm,joueur,dp,Ip,Ir)
             return x1,y1,value1
         else :
@@ -202,7 +200,6 @@ def haut(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         elif mv==0 :
             x1,y1,value1=Fou_depl(i-1,j,grille,prev,Ir)
             mv=Trigger(lm,joueur,dp,Ip,Ir)
-            grille[i-1][j]=value
             return x1,y1,value1
         else :
             return i-1,j,value
@@ -224,7 +221,6 @@ def bas(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         elif mv==0 :
             x1,y1,value1=Fou_depl(i+1,j,grille,value,Ir)
             mv=Trigger(lm,joueur,dp,Ip,Ir)
-            grille[i+1][j]=value
             return x1,y1,value1
         else :
             return i+1,j,value
@@ -399,7 +395,6 @@ if __name__ == '__main__':
     Gasper = {"abs" : 0, "ord" : 0, "pinte" : 3}
     Pintes={}
     Liste_monstre = choix_monstre(level)
-    Plateau=[]
     Plateau=BuildCastle(level)
     x=8
     y=4
