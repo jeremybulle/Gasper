@@ -150,7 +150,7 @@ def droite(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         position(i,j+1,grille)
         Trigger(joueur,Ip,lm,dp,Ir)
         if mv==1:
-            Retour_recep(i,j+1,value)
+            Retour_recep(n,i,j+1,value)
         elif mv==0 :
             Fou_depl(i,j+1,value,Ir)
             Trigger(joueur,Ip,lm,dp,Ir)
@@ -173,7 +173,7 @@ def gauche(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         position(i,j-1,grille)
         Trigger(joueur,Ip,lm,dp,Ir)
         if mv==1:
-            Retour_recep(i,j-1,value)
+            Retour_recep(n,i,j-1,value)
         elif mv==0 :
             Fou_depl(i,j-1,value,Index_room)
             Trigger(joueur,Ip,lm,dp,Ir)
@@ -197,7 +197,7 @@ def haut(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         position(i-1,j,grille)
         Trigger(joueur,Ip,lm,dp,Ir)
         if mv==1:
-            Retour_recep(i-1,j,value)
+            Retour_recep(n,i-1,j,value)
         elif mv==0 :
             Fou_depl(i-1,j,value,Ir)
             Trigger(joueur,Ip,lm,dp,Ir)
@@ -220,7 +220,7 @@ def bas(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         position(i+1,j,grille)
         Trigger(joueur,Ip,lm,dp,Ir)
         if mv==1:
-            Retour_recep(i+1,j,value)
+            Retour_recep(n,i+1,j,value)
         elif mv==0 :
             Fou_depl(i+1,j,value,Ir)
             Trigger(joueur,Ip,lm,dp,Ir)
@@ -296,16 +296,20 @@ def Is_one_case_range(Monstre,joueur,lm):
 
 #Maitre du chateau
 
-def Retour_recep (i,j,prev) :
+def Retour_recep (n,i,j,prev) :
     """modifie les coordonnées de joueur ce qui le place à la réception"""
     global x
     global y
     global value
     showinfo("Cher visiteur","Laissez-moi vous raccompagner à l'entrée de ma demeure")
     Plateau[i][j]=prev
-    position(8,4,Plateau)
-    x=8
-    y=4
+    if n==1:
+        x=8
+        y=4
+    if n==2:
+        x=0
+        y=10
+    position(x,y,Plateau)
 
 #Savant fou :
 
@@ -396,7 +400,7 @@ if __name__ == '__main__':
 
 #Creation de la fenetre
     f=Tk()
-    f.title("Gasper")
+    f.title("Fantôme Escape")
     frame=Frame(f)
     frame.pack()
     cadre=LabelFrame(f,text="Déplacement")
