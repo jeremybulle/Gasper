@@ -53,13 +53,21 @@ def choix_monstre(n):
         choix={"Master" : {"abs": None, "ord": None},"Fou": {"abs": None, "ord": None},"Bibbendum1": {"abs": None, "ord": None}, "Gobelin" : {"abs": None, "ord": None}}
         return choix      
 
-def Chateautk(w,grille):
+def Chateautk(v,w,grille):
+    varL="Nb de pintes de Gasper :%d"%(Gasper["pinte"])
+    Label(v,text=varL).grid(row=3,column=1)
     size=len(grille)
     size2=len(grille[0])
     for i in range(size):
         for j in range(size2):
-            if grille[i][j]=="P" or grille[i][j]==0 or grille[i][j]=="R" or grille[i][j]=="E":
+            if grille[i][j]==0 :
                 Canvas(w,width=50,height=50,bg="Lightsteelblue3").grid(row=i,column=j)
+            elif grille[i][j]=="E":
+                Canvas(w,width=50,height=50,bg="firebrick4").grid(row=i,column=j)
+            elif grille[i][j]=="P" :
+                Canvas(w,width=50,height=50,bg="SpringGreen4").grid(row=i,column=j)
+            elif grille[i][j]=="R":
+                Canvas(w,width=50,height=50,bg="DarkOrchid4").grid(row=i,column=j)
             elif grille[i][j]=="*":
                 Canvas(w,width=50,height=50,bg="dark slate grey").grid(row=i,column=j)
             elif grille[i][j]==" ":
@@ -90,7 +98,7 @@ def position(i,j,grille):
     # Si la valeur temporaire correpond à la valeur du Paradis le fantôme gagne
     if value=="P":
         grille[i][j]="&"
-        Chateautk(frame,grille)
+        Chateautk(vie,frame,grille)
         result=askquestion("Victoire","Veux tu recommencer ?")
         if result=="no":
             showinfo("Gasper","Gasper rejoint le paradis des fantômes")
@@ -99,7 +107,7 @@ def position(i,j,grille):
             restart_program()
     elif value=="E":
         grille[i][j]="&"
-        Chateautk(frame,grille)
+        Chateautk(vie,frame,grille)
         showinfo("Ascenseur","Veuillez monter dans l'ascenseur")
         level=2
         Plateau=BuildCastle(level)
@@ -120,7 +128,7 @@ def position(i,j,grille):
             restart_program()
     else :
         grille[i][j]="&"
-        Chateautk(frame,grille)
+        Chateautk(vie,frame,grille)
         
 #Gestion des limites de la matrice et des mouvements impossibles de Gasper
 
@@ -403,11 +411,15 @@ if __name__ == '__main__':
     f.title("Fantôme Escape")
     frame=Frame(f)
     frame.pack()
+    vie=LabelFrame(f,text="Vie")
+    vie.pack()
     cadre=LabelFrame(f,text="Déplacement")
-    cadre.pack(side=BOTTOM)
+    cadre.pack()
+    cadre2=Label(f)
+    cadre2.pack()
 #Chateau
     Plateau=BuildCastle(level)
-    Chateautk(frame,Plateau)
+    Chateautk(vie,frame,Plateau)
     value=0
     x=8
     y=4
@@ -426,9 +438,9 @@ if __name__ == '__main__':
     boutond.grid(row=1,column=4)
 #Bouton quitter
 #Bouton restart
-    boutonq=Button(cadre,text="Quit",command=f.quit)
+    boutonq=Button(cadre2,text="Quit",command=f.quit)
     boutonq.grid(row=2,column=4)
-    boutonres=Button(cadre,text="Restart",command=restart_program)
+    boutonres=Button(cadre2,text="Restart",command=restart_program)
     boutonres.grid(row=2,column=1)
 
     f.mainloop()
