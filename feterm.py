@@ -44,7 +44,7 @@ def BuildCastle(n):
     """ Construction des elements du chateau """
     tab=[u"\U0000256C",u"\U00002554",u"\U00002557",u"\U0000255A",u"\U0000255D",u"\U00002560",u"\U00002563",u"\U00002566",
     u"\U00002569",u"\U00002550",u"\U00002551"] #Table Unicode des caracteres
-    if n==1: #Level 1 
+    if n==1: #Level 1
         grille=[[" "," ",tab[1],tab[9],tab[9],tab[9],tab[2]," "," "," ","E"," "," "],[" "," ",tab[10]," "," "," ",tab[10]," "," "," ",tab[10]," "," "],
         [0,tab[9],tab[0],tab[9],0,tab[9],tab[0],tab[9],0,tab[9],tab[0],tab[9],0],[tab[10]," ",tab[10]," "," "," ",tab[10]," "," "," ",tab[10]," ",tab[10]],
         [0,tab[9],tab[0],tab[9],0,tab[9],tab[0],tab[9],0,tab[9],tab[0],tab[9],0],[tab[10]," ",tab[10]," "," "," ",tab[10]," "," "," ",tab[10]," ",tab[10]],
@@ -96,7 +96,7 @@ def position(i,j,grille):
         print "1. fermer le programme"
         print "2. relancer une partie"
         flag = input()
-        if flag == 1 : #Quitte le programme 
+        if flag == 1 : #Quitte le programme
             sys.exit()
         if flag == 2 : #Relance le programme
             restart_program()
@@ -244,7 +244,7 @@ def choix_monstre(n):
     if n==1: #Level 1
         choix={"Master" : {"abs": None, "ord": None},"Fou" :{"abs": None, "ord": None}, "Bibbendum1": {"abs": None, "ord": None},"Bibbendum2": {"abs": None, "ord": None}, "Bibbendum3": {"abs": None, "ord": None}}
         return choix
-    if n==2: #Level2
+    if n==2: #Level 2
         choix={"Master" : {"abs": None, "ord": None},"Fou": {"abs": None, "ord": None},"Bibbendum1": {"abs": None, "ord": None}, "Gobelin" : {"abs": None, "ord": None}}
         return choix
 
@@ -276,7 +276,7 @@ def Pop_pinte(dict_pinte):
             x=random.randint(1,3)
             Pintet=Pintet+x
             Nb.append(x)
-    #Creer un dictionnaire correspondant aux salles avec des pintes et leur nombre, on peut avoir jusqu'a 5 salles
+    #modifie le dictionnaire a chaque combinaisons de pintes, stockant, leur coordonnees et leur nombre, on peut avoir jusqu'a 5 salles
     for i in range(len(Nb)):
         dict_pinte[i]={"abs":None,"ord":None,"nb":Nb[i]}
 
@@ -328,7 +328,7 @@ def Fou_take_pinte(joueur):
 
 def Fou_depl(i,j,grille,prev,Ir):
     """pouvoir du Fou qui modifie de manière aleatoire la position de Gasper, Gasper peut etre deplace dans une case monstre"""
-    r = random.randint(0,11) 
+    r = random.randint(0,11)
     x = Ir[r][0]
     y = Ir[r][1]
     grille[i][j]=prev
@@ -342,7 +342,7 @@ def Bib_take_pinte(joueur):
     joueur["pinte"] = joueur["pinte"] - 2
     print "Gasper paralyse perd deux pintes d'ectoplasme, il lui reste %d pinte(s) d'ectoplasme"%(joueur["pinte"])
 
-#Gobelin present que dans le level 2 
+#Gobelin present que dans le level 2
 def Gobelin_skill(joueur, Ip, lm,Ir):
     """Le gobelin vole 1 pinte a Gasper et se teleporte dans une case "Salle" vide """
     joueur["pinte"] = joueur["pinte"] - 2
@@ -411,7 +411,7 @@ if __name__ == '__main__':
     Pop_pinte(Pintes) #Apparition dans le chateau
     Pop_monstre(Pintes,Liste_monstre,Index_pop,Index_room) #Apparition dans le chateau
 
-#Interaction avec le joueur a travers des choix. Ces choix declencheront les deplacements de Gasper. 
+#Interaction avec le joueur a travers des choix. Ces choix declencheront les deplacements de Gasper.
     while True:
         answer=menu(Plateau)
         os.system("clear")
