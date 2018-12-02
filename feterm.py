@@ -6,8 +6,8 @@
 #Jeremy BULLE et Domitille COQ--ETCHEGARAY
 #Master 1 Bio-Informatique 2018-2019
 
-"""Ce programme est un jeu, où l'utilisateur deplace un fantôme appele Gasper.
-Le but du jeu est de rejoindre le paradis en traversant le chateau tout en evitant
+"""Ce programme est un jeu, où l'utilisateur deplace un fantôme appelé Gasper.
+Le but du jeu est de rejoindre le paradis en traversant le château tout en évitant
 les monstres. Gasper doit toujours avoir au moins une pinte dans son inventaire,
 si ce n'est pas la cas, c'est Game Over."""
 
@@ -34,16 +34,16 @@ def menu(grille):
     try :
         answer=int(input())
         return answer
-    except SyntaxError: # si l'utilisateur appuie sur la touche entree sans ajouter de valeur cela n'entraine pas d'erreur
+    except SyntaxError: # si l'utilisateur appuie sur la touche entrée sans ajouter de valeur cela n'entraine pas d'erreur
         pass
     except NameError : # si l'utilisateur entre un string au lieu d'un integer cela n'entraine pas d'erreur
         pass
 
-#Fonctions liees a la construction du chateau
+#Fonctions liées à la construction du château
 def BuildCastle(n):
-    """ Construction des elements du chateau """
+    """ Construction des élements du château """
     tab=[u"\U0000256C",u"\U00002554",u"\U00002557",u"\U0000255A",u"\U0000255D",u"\U00002560",u"\U00002563",u"\U00002566",
-    u"\U00002569",u"\U00002550",u"\U00002551"] #Table Unicode des caracteres
+    u"\U00002569",u"\U00002550",u"\U00002551"] #Table Unicode des caractères
     if n==1: #Level 1
         grille=[[" "," ",tab[1],tab[9],tab[9],tab[9],tab[2]," "," "," ","E"," "," "],[" "," ",tab[10]," "," "," ",tab[10]," "," "," ",tab[10]," "," "],
         [0,tab[9],tab[0],tab[9],0,tab[9],tab[0],tab[9],0,tab[9],tab[0],tab[9],0],[tab[10]," ",tab[10]," "," "," ",tab[10]," "," "," ",tab[10]," ",tab[10]],
@@ -60,7 +60,7 @@ def BuildCastle(n):
         return grille
 
 def afficher(grille):
-    """Affichage du chateau sur le terminal"""
+    """Affichage du château sur le terminal"""
     size=len(grille)
     for i in range(size):
         for j in grille[i]:
@@ -68,7 +68,7 @@ def afficher(grille):
         print " "
 
 def Salle(n):
-    """Determine les cases "Salle" de la matrice dans une variable"""
+    """Détermine les cases "Salle" de la matrice dans une variable"""
     if n==1: #Level 1
         salle=[[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]]
         return salle
@@ -76,7 +76,7 @@ def Salle(n):
         salle=[[8,0],[4,0],[1,0],[3,2],[8,2],[8,4],[1,6],[3,6],[6,6],[2,8],[4,10],[8,10]]
         return salle
 
-#Fonctions liees a la position de Gasper
+#Fonctions liées à la position de Gasper
 
 def position(i,j,grille):
     """ Position de Gasper et conditions de fin de jeu """
@@ -85,11 +85,11 @@ def position(i,j,grille):
     global Index_pop
     global Liste_monstre
     global level
-    value=grille[i][j] # Valeur temporaire, il s'agit de la valeur de la case ou se deplace Gasper
-    # Modification des coordonnees de position de Gasper
+    value=grille[i][j] # Valeur temporaire, il s'agit de la valeur de la case où se déplace Gasper
+    # Modification des coordonnées de position de Gasper
     Gasper["abs"]=j
     Gasper["ord"]=i
-    # Si la valeur temporaire correpond a la valeur du Paradis le fantôme gagne
+    # Si la valeur temporaire correpond à la valeur du Paradis le fantôme gagne
     if value=="P":
         print "You win !!"
         print "Appuyez une touche pour fermer le programme"
@@ -100,10 +100,10 @@ def position(i,j,grille):
             sys.exit()
         if flag == 2 : #Relance le programme
             restart_program()
-    # Si la valeur temporaire correspond a la valeur E : Etage le gagne monte a l'etage suivant
+    # Si la valeur temporaire correspond à la valeur E : Etage le gagne monte à l'étage suivant
     elif value=="E":
         print "Veuillez monter dans l'ascenseur"
-        #Initialisation du 2eme niveau (etage du chateau)
+        #Initialisation du 2eme niveau (étage du château)
         level=2
         Plateau=BuildCastle(level)
         Index_room=Salle(level)
@@ -118,7 +118,7 @@ def position(i,j,grille):
         return value
     # Si Gasper n'a plus de pintes, il perd"
     elif Gasper["pinte"]<0 or Gasper["pinte"]==0:
-        print "Gasper ne peut plus se deplacer sans energie..."
+        print "Gasper ne peut plus se déplacer sans energie..."
         print "Game Over"
         print "1. fermer le programme"
         print "2. relancer une partie"
@@ -154,9 +154,9 @@ def Limite(i,j,grille):
 def droite(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     """ deplace Gasper d'une case vers la droite"""
     grille[i][j]=prev
-    if Limite(i,j+1,grille)!=True: #Verifie si Gasper fait face a une limite
+    if Limite(i,j+1,grille)!=True: #Verifie si Gasper fait face à une limite
         value=position(i,j+1,grille)
-        #Gestion des evenements et message
+        #Gestion des évenements et message
         mv=Trigger(lm,joueur,dp,Ip,Ir)
         if mv==1:
             #Rencontre avec le Maitre
@@ -176,7 +176,7 @@ def droite(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         return i,j,value
 
 def gauche(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
-    """ deplace Gasper d'une case vers la gauche"""
+    """ déplace Gasper d'une case vers la gauche"""
     grille[i][j]=prev
     if Limite(i,j-1,grille)!=True:
         value=position(i,j-1,grille)
@@ -197,7 +197,7 @@ def gauche(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         return i,j,value
 
 def haut(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
-    """ deplace Gasper d'une case vers le haut"""
+    """ déplace Gasper d'une case vers le haut"""
     grille[i][j]=prev
     if Limite(i-1,j,grille)!=True:
         value=position(i-1,j,grille)
@@ -218,7 +218,7 @@ def haut(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         return i,j,value
 
 def bas(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
-    """ deplace Gasper d'une case vers le bas"""
+    """ déplace Gasper d'une case vers le bas"""
     grille[i][j]=prev
     if Limite(i+1,j,grille)!=True:
         value=position(i+1,j,grille)
@@ -238,7 +238,7 @@ def bas(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         print ("Mouvement impossible")
         return i,j,value
 
-# Fonctions relatives a la positions des ennemis:
+# Fonctions relatives à la positions des ennemis:
 def choix_monstre(n):
     """Definition des monstres presents dans le chateau"""
     if n==1: #Level 1
@@ -249,9 +249,9 @@ def choix_monstre(n):
         return choix
 
 def Is_monstre(Ip,x):
-    """verifie s il y a deja un monstre dans une case "Salle", x etant la valeur envoyee par la fonction random"""
+    """vérifie s'il y a deja un monstre dans une case "Salle", x etant la valeur envoyée par la fonction random"""
     flag = 0
-    for i in Ip : #scan la liste Indice_pop pour voir si l'indice aleatoire fournit par la fonction random.randit() n'a pas deja ete attribue a un autre monstre
+    for i in Ip : #scan la liste Indice_pop pour voir si l'indice aléatoire fournit par la fonction random.randit() n'a pas deja été attribué à un autre monstre
         if x == i :
             flag = flag + 1 #ajoute 1 a la valeur de flag si l'indice existe deja dans Index_pop
     if flag > 0 :
@@ -260,7 +260,7 @@ def Is_monstre(Ip,x):
         return False #indice pas utilise pour un autre monstre, il est utilisable pour un nouveau monstre
 
 def Pop_pinte(dict_pinte):
-    """Creer le nb de Pintes qui apparaissent dans le Château inferieur a 5 pintes dans tous le château """
+    """Creer le nb de Pintes qui apparaissent dans le Château inferieur à 5 pintes dans tous le château """
     Pintet=0 #Nb total de pintes dans le chateau
     Nb=[] #Liste permettant de conserver les combinaisons possibles
     while(Pintet<5): #Nous devons avoir que 5 pintes
@@ -276,19 +276,19 @@ def Pop_pinte(dict_pinte):
             x=random.randint(1,3)
             Pintet=Pintet+x
             Nb.append(x)
-    #modifie le dictionnaire a chaque combinaisons de pintes, stockant, leur coordonnees et leur nombre, on peut avoir jusqu'a 5 salles
+    #modifie le dictionnaire à chaque combinaisons de pintes, stockant, leur coordonnees et leur nombre, on peut avoir jusqu'a 5 salles
     for i in range(len(Nb)):
         dict_pinte[i]={"abs":None,"ord":None,"nb":Nb[i]}
 
 def Pop_monstre(D,lm,Ip,Ir):
-    """fonction qui attribue les coordonnees a tous les monstres et a toutes les pintes"""
-    for M in lm.keys() : #Attribution de coordonnees des cases "Salle" aux monstres
+    """fonction qui attribue les coordonnées à tous les monstres et à toutes les pintes"""
+    for M in lm.keys() : #Attribution de coordonnées des cases "Salle" aux monstres
         x = random.randint(0,11) # genère un indice aleatoire
-        while Is_monstre(Ip,x) == True : #verifie si l'indice est attribue a un autre monstre , si c est le cas relance random.randit
+        while Is_monstre(Ip,x) == True : #verifie si l'indice est attribué à un autre monstre , si c est le cas relance random.randit
             x = random.randint(0,11)
         Ip.append(x) # note l'attribution d'indice dans Index_pop
-        lm[M]["ord"] = Ir[x][0] # modifie l'abs du monstre grace a l Index_room
-        lm[M]["abs"] = Ir[x][1] # modifie l ord du monstre grace a l Index_room
+        lm[M]["ord"] = Ir[x][0] # modifie l'abs du monstre grace à l Index_room
+        lm[M]["abs"] = Ir[x][1] # modifie l ord du monstre grace à l Index_room
     for k in D.keys(): #Attribution des valeurs des cases "Salle" aux pintes
         x = random.randint(0,11)
         while Is_monstre(Ip,x) == True :
@@ -298,7 +298,7 @@ def Pop_monstre(D,lm,Ip,Ir):
         D[k]["abs"]=Ir[x][1]
 
 def Is_one_case_range(Monstre,joueur,lm):
-    """fonction qui verifie s'il y a un monstre a une case de Gasper"""
+    """fonction qui verifie s'il y a un monstre à une case de Gasper"""
     if ((lm[Monstre]["ord"] == (joueur["ord"] +1) or lm[Monstre]["ord"] == (joueur["ord"] - 1)) and lm[Monstre]["abs"] == joueur["abs"]): #monstre une case au dessus ou en dessous
         return True
     elif ((lm[Monstre]["abs"] == (joueur["abs"] +1) or lm[Monstre]["abs"] == (joueur["abs"] - 1)) and lm[Monstre]["ord"] == joueur["ord"]): #monstre uns case a gauche ou a droite
@@ -309,7 +309,7 @@ def Is_one_case_range(Monstre,joueur,lm):
 #Maitre du chateau
 #Evenement
 def Retour_recep (n) :
-    """modifie les coordonnees de Gasper ce qui le place a la reception"""
+    """modifie les coordonnees de Gasper ce qui le place à la reception"""
     if n==1:
         x=8
         y=4
@@ -322,7 +322,7 @@ def Retour_recep (n) :
 #Savant fou :
 #Evenement
 def Fou_take_pinte(joueur):
-    """Le Fou vole 1 pinte a Gasper, modifie la nombre de pinte que possède le joueur"""
+    """Le Fou vole 1 pinte à Gasper, modifie la nombre de pinte que possède le joueur"""
     joueur["pinte"] = joueur["pinte"] - 1 #modifie la valeur dans le dict Gasper
     print "Gasper perd une pinte d'ectoplasme, il lui reste %d pinte(s) d'energie"%(joueur["pinte"])
 
@@ -351,8 +351,8 @@ def Gobelin_skill(joueur, Ip, lm,Ir):
     while Is_monstre(Ip,x) == True : #verifie si l'indice est attribue a un autre monstre , si c est le cas relance random.randit
         x = random.randint(0,11)
     Ip[3]= x # modifie le nouvel intice attribue au gobelin
-    lm["Gobelin"]["ord"] = Ir[x][0] # modifie l'abs du Gobelin grace a l Index_room
-    lm["Gobelin"]["abs"] = Ir[x][1] # modifie l ord du Gobelin grace a l Index_room
+    lm["Gobelin"]["ord"] = Ir[x][0] # modifie l'abs du Gobelin grace à l Index_room
+    lm["Gobelin"]["abs"] = Ir[x][1] # modifie l ord du Gobelin grace à l Index_room
 
 #Trigger a poser apres chaque deplacement:
 def Trigger(lm,joueur,D,Ip,Ir):
@@ -410,7 +410,9 @@ if __name__ == '__main__':
     value=position(x,y,Plateau)
     Pop_pinte(Pintes) #Apparition dans le chateau
     Pop_monstre(Pintes,Liste_monstre,Index_pop,Index_room) #Apparition dans le chateau
-
+    print "Bienvenue dans le jeu Fantôme Escape !"
+    print "Gasper le petit fantôme que vous incarnez à besoin de rejoindre le paradis des fantômes, aide-le à trouve le bon chemin."
+    print "Mais attention aux habitants qui pourraient empêcher Gasper d'atteindre son but !"
 #Interaction avec le joueur a travers des choix. Ces choix declencheront les deplacements de Gasper.
     while True:
         answer=menu(Plateau)

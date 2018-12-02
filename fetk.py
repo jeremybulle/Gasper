@@ -4,7 +4,7 @@
 #Jeremy BULLE et Domitille COQ--ETCHEGARAY
 #Master 1 Bio-Informatique 2018-2019
 
-"""Ce programme est un jeu, où l'utilisateur deplace un fantôme appele Gasper.
+"""Ce programme est un jeu, où l'utilisateur deplace un fantôme appelé Gasper.
 Le but du jeu est de rejoindre le paradis en traversant le chateau tout en evitant
 les monstres. Gasper doit toujours avoir au moins une pinte dans son inventaire,
 si ce n'est pas la cas, c'est Game Over."""
@@ -22,7 +22,7 @@ def restart_program():
     os.execl(python, python, * sys.argv)
 
 def BuildCastle(n):
-    """ Construction des elements du chateau """
+    """ Construction des élements du chateau """
     if n==1: #Level 1
         grille=[[" "," ","*","*","*","*","*"," "," "," ","E"," "," "],[" "," ","*"," "," "," ","*"," "," "," ","*"," "," "],
         [0,"*","*","*",0,"*","*","*",0,"*","*","*",0],["*"," ","*"," "," "," ","*"," "," "," ","*"," ","*"],
@@ -39,7 +39,7 @@ def BuildCastle(n):
         return grille
 
 def Salle(n):
-    """ Determine les cases "Salle" de la matrice """
+    """ Détermine les cases "Salle" de la matrice """
     if n==1: #Level 1
         salle=[[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]]
         return salle
@@ -72,7 +72,7 @@ def Chateautk(v,w,grille):
             elif grille[i][j]=="&":
                 can=Canvas(w,width=50,height=50)
                 can.grid(row=i,column=j)
-                #Affichage d'une image a place d'une simple case
+                #Affichage d'une image à place d'une simple case
                 img=PhotoImage(file="cat-ghost-pattern.gif",master=can)
                 can.create_image(50/2,50/2,image=img)
                 label=Label(image=img)
@@ -90,11 +90,11 @@ def position(i,j,grille):
     global x
     global y
     global Plateau
-    value=grille[i][j] #Recupere la valeur de la matrice ou va se deplacer Gasper
-    #Modification des coordonnees de la position de Gasper
+    value=grille[i][j] #Recupere la valeur de la matrice où va se deplacer Gasper
+    #Modification des coordonnées de la position de Gasper
     Gasper["abs"]=j
     Gasper["ord"]=i
-    # Si la valeur temporaire correpond a la valeur du Paradis le fantôme gagne
+    # Si la valeur temporaire correpond à la valeur du Paradis le fantôme gagne
     if value=="P":
         grille[i][j]="&"
         Chateautk(vie,frame,grille)
@@ -104,7 +104,7 @@ def position(i,j,grille):
             f.quit() #Ferme la fenetre Tk()
         elif result=="yes":
             restart_program() #Relance le programme
-    #Si la valeur correspond a la valeur de l'etage on lance le niveau 2
+    #Si la valeur correspond à la valeur de l'etage on lance le niveau 2
     elif value=="E":
         grille[i][j]="&"
         Chateautk(vie,frame,grille)
@@ -152,7 +152,7 @@ def Limite(x,y,grille):
         return True
 
 def droite(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
-    """Deplacement d'une case a droite"""
+    """Deplacement d'une case à droite"""
     global x
     global y
     global value
@@ -176,7 +176,7 @@ def droite(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         y=j
 
 def gauche(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
-    """ Deplacement d'une case a gauche"""
+    """ Deplacement d'une case à gauche"""
     global x
     global y
     global value
@@ -251,9 +251,9 @@ def bas(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
 #Positionnement des ennemis:
 
 def Is_monstre(Ip,x):
-    """verifie s il y a deja un monstre dans une case "Salle", x etant la valeur envoyee par la fonction random"""
+    """verifie s il y a deja un monstre dans une case "Salle", x etant la valeur envoyée par la fonction random"""
     flag = 0
-    for i in Ip : #scan la liste Indice_pop pour voir si l indice aleatoire fournit par la fonction random.randit() n'a pas deja ete attribue a un autre monstre
+    for i in Ip : #scan la liste Indice_pop pour voir si l indice aleatoire fournit par la fonction random.randit() n'a pas deja ete attribue à un autre monstre
         if x == i :
             flag = flag + 1 #ajoute 1 a la valeur de flag si le indice existe deja dans Index_pop
     if flag > 0 :
@@ -262,7 +262,7 @@ def Is_monstre(Ip,x):
         return False #indice pas utilise pour un autre monstre, il est utilisable pour un nouveau monstre
 
 def Pop_pinte(D):
-    """Creer le nb de Pintes qui apparaissent dans le Château inferieur a 5 pintes dans tous le château """
+    """Creer le nb de Pintes qui apparaissent dans le Château inferieur à 5 pintes dans tous le château """
     Pintet=0 #Nb total de pintes dans le chateau
     Nb=[] #Liste permettant de conserver les combinaisons possibles
     while(Pintet<5):
@@ -298,8 +298,8 @@ def Pop_monstre(D,lm,Ip,Ir):
         while Is_monstre(Ip,x) == True : #verifie si l'indice est attribue a un autre monstre , si c est le cas relance random.randit
             x = random.randint(0,11)
         Ip.append(x) # note l'attribution d'indice dans Index_pop
-        lm[M]["ord"] = Ir[x][0] # modifie l'abs du monstre grace a l Index_room
-        lm[M]["abs"] = Ir[x][1] # modifie l ord du monstre grace a l Index_room
+        lm[M]["ord"] = Ir[x][0] # modifie l'abs du monstre grace à l Index_room
+        lm[M]["abs"] = Ir[x][1] # modifie l ord du monstre grace à l Index_room
     for k in D.keys(): #Attribution des valeurs de salle aux pintes
         x = random.randint(0,11)
         while Is_monstre(Ip,x) == True :
@@ -309,7 +309,7 @@ def Pop_monstre(D,lm,Ip,Ir):
         D[k]["abs"]=Ir[x][1]
 
 def Is_one_case_range(Monstre,joueur,lm):
-    """focntion qui verifie s'il y a un monstre a une case de Gasper"""
+    """focntion qui verifie s'il y a un monstre à une case de Gasper"""
     if ((lm[Monstre]["ord"] == (joueur["ord"] +1) or lm[Monstre]["ord"] == (joueur["ord"] - 1)) and lm[Monstre]["abs"] == joueur["abs"]): #monstre une case au dessus ou en dessous
         return True
     elif ((lm[Monstre]["abs"] == (joueur["abs"] +1) or lm[Monstre]["abs"] == (joueur["abs"] - 1)) and lm[Monstre]["ord"] == joueur["ord"]): #monstre uns case a gauche ou a droite
@@ -324,7 +324,7 @@ def Retour_recep (n,i,j,prev) :
     global x
     global y
     global value
-    showinfo("Cher visiteur","Laissez-moi vous raccompagner a l'entree de ma demeure")
+    showinfo("Cher visiteur","Laissez-moi vous raccompagner à l'entrée de ma demeure")
     Plateau[i][j]=prev
     if n==1:
         x=8
@@ -371,7 +371,7 @@ def Gobelin_skill(joueur, Ip, lm,Ir):
     lm["Gobelin"]["ord"] = Ir[x][0] # modifie l'abs du Gobelin grace a l Index_room
     lm["Gobelin"]["abs"] = Ir[x][1] # modifie l ord du Gobelin grace a l Index_room
 
-#Trigger a lancer apres chaque deplacement, cela permet la gestion des evênements d'interaction entre les monstres et Gasper:
+#Trigger à lancer apres chaque deplacement, cela permet la gestion des evênements d'interaction entre les monstres et Gasper:
 def Trigger(joueur,Ip,listm,dicP,Ir):
     global mv
     for Monstre in listm.keys(): #Monstre
@@ -440,6 +440,7 @@ if __name__ == '__main__':
     position(x,y,Plateau)
     Pop_pinte(Pintes)
     Pop_monstre(Pintes,Liste_monstre,Index_pop,Index_room)
+    showinfo("Bienvenue dans le jeu Fantôme Escape !","Gasper le petit fantôme que vous incarnez à besoin de rejoindre le paradis des fantômes, aide-le à trouve le bon chemin. Mais attention aux habitants qui pourraient empêcher Gasper d'atteindre son but !")
 
 #Bouton deplacement
     boutonl=Button(cadre,text="Gauche",command=lambda: gauche(x,y,value,Plateau,Liste_monstre,Gasper,Pintes,Index_pop,level,Index_room)).grid(row=1,column=1)
