@@ -1,6 +1,6 @@
 # -*-coding:utf-8 -*
 #Python 2.7
-#Jeu Escape Game 
+#Jeu Escape Game
 #Jeremy BULLE et Domitille COQ--ETCHEGARAY
 #Master 1 Bio-Informatique 2018-2019
 
@@ -42,7 +42,7 @@ def Salle(n):
     """ Determine les cases "Salle" de la matrice """
     if n==1: #Level 1
         salle=[[2,0],[4,0],[6,0],[2,4],[4,4],[6,4],[2,8],[4,8],[6,8],[2,12],[4,12],[6,12]]
-        return salle  
+        return salle
     elif n==2: #Level 2
         salle=[[8,0],[4,0],[1,0],[3,2],[8,2],[8,4],[1,6],[3,6],[6,6],[2,8],[4,10],[8,10]]
         return salle
@@ -77,11 +77,11 @@ def Chateautk(v,w,grille):
                 can.create_image(50/2,50/2,image=img)
                 label=Label(image=img)
                 label.image=img
-                
+
 #Gasper et ses mouvements
 
 def position(i,j,grille):
-    """ Position de Gasper """ 
+    """ Position de Gasper """
     global value
     global level
     global Index_room
@@ -130,14 +130,14 @@ def position(i,j,grille):
     else :
         grille[i][j]="&"
         Chateautk(vie,frame,grille)
-        
+
 #Gestion des limites de la matrice et des mouvements impossibles de Gasper
 
 def Limite(x,y,grille):
     """ Delimite l'espace du terrain de jeu"""
     size=len(grille)
     size1=len(grille[0])
-    # Limite de la matrice 
+    # Limite de la matrice
     if x>size-1 :
         return True
     elif y>size1-1:
@@ -150,7 +150,7 @@ def Limite(x,y,grille):
     # Si jamais la valeur temporaire est " " Gasper rencontre un mur et ne peut pas passer
     elif grille[x][y]==" ":
         return True
-  
+
 def droite(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     """Deplacement d'une case a droite"""
     global x
@@ -174,7 +174,7 @@ def droite(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         showwarning("Warning","Mouvement impossible")
         x=i
         y=j
-        
+
 def gauche(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     """ Deplacement d'une case a gauche"""
     global x
@@ -198,7 +198,7 @@ def gauche(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         showwarning("Warning","Mouvement impossible")
         x=i
         y=j
-    
+
 
 def haut(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     """Deplacement d'une case au dessus"""
@@ -223,7 +223,7 @@ def haut(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
         showwarning("Warning","Mouvement impossible")
         x=i
         y=j
-    
+
 def bas(i,j,prev,grille,lm,joueur,dp,Ip,n,Ir):
     """Deplacement d'une case en dessous"""
     global x
@@ -260,11 +260,11 @@ def Is_monstre(Ip,x):
         return True #indice deja attribue a un monstre
     else :
         return False #indice pas utilise pour un autre monstre, il est utilisable pour un nouveau monstre
-    
+
 def Pop_pinte(D):
     """Creer le nb de Pintes qui apparaissent dans le Château inferieur a 5 pintes dans tous le château """
     Pintet=0 #Nb total de pintes dans le chateau
-    Nb=[] #Liste permettant de conserver les combinaisons possibles 
+    Nb=[] #Liste permettant de conserver les combinaisons possibles
     while(Pintet<5):
         if Pintet==3:
             x=random.randint(1,2)
@@ -278,7 +278,7 @@ def Pop_pinte(D):
             x=random.randint(1,3)
             Pintet=Pintet+x
             Nb.append(x)
-    #Creer un dictionnaire correspondant aux salles avec des pintes et leur nombre, on peut avoir jusqu'a 5 salles 
+    #Creer un dictionnaire correspondant aux salles avec des pintes et leur nombre, on peut avoir jusqu'a 5 salles
     for i in range(len(Nb)):
         D[i]={"abs":None,"ord":None,"nb":Nb[i]}
 
@@ -289,7 +289,7 @@ def choix_monstre(n):
         return choix
     if n==2: #Level 2
         choix={"Master" : {"abs": None, "ord": None},"Fou": {"abs": None, "ord": None},"Bibbendum1": {"abs": None, "ord": None}, "Gobelin" : {"abs": None, "ord": None}}
-        return choix   
+        return choix
 
 def Pop_monstre(D,lm,Ip,Ir):
     """fonction qui attribue les coordonnees a tous les monstres"""
@@ -307,7 +307,7 @@ def Pop_monstre(D,lm,Ip,Ir):
         Ip.append(x)
         D[k]["ord"]=Ir[x][0]
         D[k]["abs"]=Ir[x][1]
-        
+
 def Is_one_case_range(Monstre,joueur,lm):
     """focntion qui verifie s'il y a un monstre a une case de Gasper"""
     if ((lm[Monstre]["ord"] == (joueur["ord"] +1) or lm[Monstre]["ord"] == (joueur["ord"] - 1)) and lm[Monstre]["abs"] == joueur["abs"]): #monstre une case au dessus ou en dessous
@@ -362,7 +362,7 @@ def Bib_take_pinte(joueur):
 #Gobelin
 def Gobelin_skill(joueur, Ip, lm,Ir):
     """Le gobelin vole 1 pinte a Gasper et se teleporte dans une autre case "Salle" vide """
-    joueur["pinte"] = joueur["pinte"] - 2
+    joueur["pinte"] = joueur["pinte"] - 1
     showinfo("Arglglglglglgl", "Le gobelin fuit et derobe une pinte d'ectoplasme a Gasper, il reste %d pinte(s) d'ectoplasme a Gasper"%(joueur["pinte"]))
     x = random.randint(0,11) # genère un indice aleatoire
     while Is_monstre(Ip,x) == True : #verifie si l'indice est attribue a un autre monstre , si c est le cas relance random.randit
@@ -402,20 +402,20 @@ def Trigger(joueur,Ip,listm,dicP,Ir):
         if (dicP[k]["abs"]==joueur["abs"] and dicP[k]["ord"]==joueur["ord"]):
             if Pintes[k]["nb"]==0:
                 showinfo("Bar","Tu as assez bu pochtron !!")
-            else : 
+            else :
                 showinfo("Bar","Oh de l'ectoplasme !! Gasper gagne %d pintes"%(dicP[k]["nb"]))
                 joueur["pinte"]=joueur["pinte"]+dicP[k]["nb"]
                 dicP[k]["nb"]=0
 #Main
 
 if __name__ == '__main__':
-    
+
 #Intitialisation:
 
 #Plateau de jeu
     level=1
     Index_pop = [] # contient des indices x generes aletoirement => Index_room[x] = coordonnees de la salle dans lequelle il y a le monstre qui a obtenue l'indice X
-    Index_room = Salle(level) #liste des salle du chateau 
+    Index_room = Salle(level) #liste des salle du chateau
     Gasper = {"abs" : 0, "ord" : 0, "pinte" : 3} #Creation de Gasper
     Pintes={} #Creation des pintes
     Liste_monstre = choix_monstre(level) #Creation des monstres

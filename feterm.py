@@ -345,7 +345,7 @@ def Bib_take_pinte(joueur):
 #Gobelin present que dans le level 2
 def Gobelin_skill(joueur, Ip, lm,Ir):
     """Le gobelin vole 1 pinte a Gasper et se teleporte dans une case "Salle" vide """
-    joueur["pinte"] = joueur["pinte"] - 2
+    joueur["pinte"] = joueur["pinte"] - 1
     print "Le gobelin fuit et derobe une pinte d'ectoplasme a Gasper, il reste %d pinte(s) d'ectoplasme a Gasper"%(joueur["pinte"])
     x = random.randint(0,11) # genère un indice aleatoire
     while Is_monstre(Ip,x) == True : #verifie si l'indice est attribue a un autre monstre , si c est le cas relance random.randit
